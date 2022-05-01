@@ -14,232 +14,231 @@ browser_mod:
     columns: 2
     square: false
     cards:
-
       #kwh
-      - type: custom:apexcharts-card
-        graph_span: 12months
-        apex_config:
-          tooltip:
-            style:
-              fontSize: 14px
-            x:
-              show: true
-              formatter: |
-                EVAL:(timestamp) => {
-                  let date = new Date(timestamp).toLocaleString('sv-SE',{year: 'numeric', month:'long'}).toString()
-                  return date.charAt(0).toUpperCase() + date.slice(1);
-                }
-          chart:
-            height: 400px
-            fontFamily: SF Text
-          fill:
-            type: gradient
-            gradient:
-              type: vertical
-              shadeIntensity: 0.2
-              opacityFrom: 1
-              opacityTo: 0.7
-              stops:
-                - 0
-                - 70
-                - 100
-          grid:
-            show: true
-            borderColor: rgba(112, 135, 164, 0.1)
-          yaxis:
-            show: true
-            decimalsInFloat: 0
-            labels:
-              style:
-                colors:
-                  - rgba(255, 255, 255, 0.5)
-                fontSize: 13px
-                fontWeight: 200
-              offsetX: -2
-          title:
-            text: ⚡ kWh
-            style:
-              color: white
-              fontSize: 38px
-              fontWeight: 700
-          xaxis:
-            tooltip:
-              enabled: false
-            crosshairs:
-              show: false
-            axisTicks:
-              show: false
-            axisBorder:
-              show: true
-              color: rgba(112, 135, 164, 0.5)
-              height: 1
-        series:
-          - entity: sensor.date
-            name: Förbrukning
-            unit: kWh
-            type: column
-            color: rgba(228,224,17,1)
-            data_generator: !secret apexcharts_tibber
+      # - type: custom:apexcharts-card
+      #   graph_span: 12months
+      #   apex_config:
+      #     tooltip:
+      #       style:
+      #         fontSize: 14px
+      #       x:
+      #         show: true
+      #         formatter: |
+      #           EVAL:(timestamp) => {
+      #             let date = new Date(timestamp).toLocaleString('sv-SE',{year: 'numeric', month:'long'}).toString()
+      #             return date.charAt(0).toUpperCase() + date.slice(1);
+      #           }
+      #     chart:
+      #       height: 400px
+      #       fontFamily: SF Text
+      #     fill:
+      #       type: gradient
+      #       gradient:
+      #         type: vertical
+      #         shadeIntensity: 0.2
+      #         opacityFrom: 1
+      #         opacityTo: 0.7
+      #         stops:
+      #           - 0
+      #           - 70
+      #           - 100
+      #     grid:
+      #       show: true
+      #       borderColor: rgba(112, 135, 164, 0.1)
+      #     yaxis:
+      #       show: true
+      #       decimalsInFloat: 0
+      #       labels:
+      #         style:
+      #           colors:
+      #             - rgba(255, 255, 255, 0.5)
+      #           fontSize: 13px
+      #           fontWeight: 200
+      #         offsetX: -2
+      #     title:
+      #       text: ⚡ kWh
+      #       style:
+      #         color: white
+      #         fontSize: 38px
+      #         fontWeight: 700
+      #     xaxis:
+      #       tooltip:
+      #         enabled: false
+      #       crosshairs:
+      #         show: false
+      #       axisTicks:
+      #         show: false
+      #       axisBorder:
+      #         show: true
+      #         color: rgba(112, 135, 164, 0.5)
+      #         height: 1
+      #   series:
+      #     - entity: sensor.date
+      #       name: Förbrukning
+      #       unit: kWh
+      #       type: column
+      #       color: rgba(228,224,17,1)
+      #       data_generator: !secret apexcharts_tibber
 
-      #influx
-      - type: custom:apexcharts-card
-        graph_span: 1month
-        apex_config:
-          yaxis:
-            show: true
-            decimalsInFloat: 0
-            labels:
-              style:
-                colors:
-                  - rgba(255, 255, 255, 0.5)
-                fontSize: 13px
-                fontWeight: 200
-              offsetX: -2
-          grid:
-            show: true
-            borderColor: rgba(112, 135, 164, 0.1)
-          title:
-            text: kg
-            style:
-              color: white
-              fontSize: 30px
-              fontWeight: 100
-          tooltip:
-            style:
-              fontSize: 14px
-            x:
-              show: true
-              formatter: |
-                EVAL:(timestamp) => {
-                  let date = new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', year: 'numeric', month:'long'}).toString().split(' ');
-                  return `${date[0]} ${date[1].charAt(0).toUpperCase() + date[1].slice(1)} ${date[2]}`;
-                }
-          xaxis:
-            tooltip:
-              enabled: false
-            crosshairs:
-              show: false
-            axisTicks:
-              show: false
-            axisBorder:
-              show: true
-              color: rgba(112, 135, 164, 0.5)
-              height: 1
-            labels:
-              style:
-                fontSize: 15px
-                fontWeight: 500
-              offsetX: -1
-              formatter: |
-                EVAL:(timestamp) => {
-                  return new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', month:'short'});
-                }
-          chart:
-            fontFamily: SF Text
-            height: 350px
-          fill:
-            type: gradient
-            gradient:
-              type: vertical
-              shadeIntensity: 0.2
-              opacityFrom: 0.7
-              opacityTo: 0.1
-              stops:
-                - 0
-                - 90
-                - 100
-          stroke:
-            curve: smooth
-            width: 3
-        all_series_config:
-          type: area
-          fill_raw: last
-        series:
-          - entity: sensor.date
-            curve: smooth
-            name: Mattias
-            color: '#9a0ca3'
-            data_generator: !secret apexcharts_influx
+      # #influx
+      # - type: custom:apexcharts-card
+      #   graph_span: 1month
+      #   apex_config:
+      #     yaxis:
+      #       show: true
+      #       decimalsInFloat: 0
+      #       labels:
+      #         style:
+      #           colors:
+      #             - rgba(255, 255, 255, 0.5)
+      #           fontSize: 13px
+      #           fontWeight: 200
+      #         offsetX: -2
+      #     grid:
+      #       show: true
+      #       borderColor: rgba(112, 135, 164, 0.1)
+      #     title:
+      #       text: kg
+      #       style:
+      #         color: white
+      #         fontSize: 30px
+      #         fontWeight: 100
+      #     tooltip:
+      #       style:
+      #         fontSize: 14px
+      #       x:
+      #         show: true
+      #         formatter: |
+      #           EVAL:(timestamp) => {
+      #             let date = new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', year: 'numeric', month:'long'}).toString().split(' ');
+      #             return `${date[0]} ${date[1].charAt(0).toUpperCase() + date[1].slice(1)} ${date[2]}`;
+      #           }
+      #     xaxis:
+      #       tooltip:
+      #         enabled: false
+      #       crosshairs:
+      #         show: false
+      #       axisTicks:
+      #         show: false
+      #       axisBorder:
+      #         show: true
+      #         color: rgba(112, 135, 164, 0.5)
+      #         height: 1
+      #       labels:
+      #         style:
+      #           fontSize: 15px
+      #           fontWeight: 500
+      #         offsetX: -1
+      #         formatter: |
+      #           EVAL:(timestamp) => {
+      #             return new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', month:'short'});
+      #           }
+      #     chart:
+      #       fontFamily: SF Text
+      #       height: 350px
+      #     fill:
+      #       type: gradient
+      #       gradient:
+      #         type: vertical
+      #         shadeIntensity: 0.2
+      #         opacityFrom: 0.7
+      #         opacityTo: 0.1
+      #         stops:
+      #           - 0
+      #           - 90
+      #           - 100
+      #     stroke:
+      #       curve: smooth
+      #       width: 3
+      #   all_series_config:
+      #     type: area
+      #     fill_raw: last
+      #   series:
+      #     - entity: sensor.date
+      #       curve: smooth
+      #       name: Mattias
+      #       color: '#9a0ca3'
+      #       data_generator: !secret apexcharts_influx
 
-      #github
-      - type: custom:apexcharts-card
-        graph_span: 2.2year
-        apex_config:
-          yaxis:
-            show: true
-            decimalsInFloat: 0
-            labels:
-              style:
-                colors:
-                  - rgba(255, 255, 255, 0.5)
-                fontSize: 13px
-                fontWeight: 200
-              offsetX: -2
-          grid:
-            show: true
-            borderColor: rgba(112, 135, 164, 0.1)
-          title:
-            text: ⭐ matt8707/hass-config
-            style:
-              color: white
-              fontSize: 30px
-              fontWeight: 100
-          tooltip:
-            style:
-              fontSize: 14px
-            x:
-              show: true
-              formatter: |
-                EVAL:(timestamp) => {
-                  let date = new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', year: 'numeric', month:'long'}).toString().split(' ');
-                  return `${date[0]} ${date[1].charAt(0).toUpperCase() + date[1].slice(1)} ${date[2]}`;
-                }
-          xaxis:
-            tooltip:
-              enabled: false
-            crosshairs:
-              show: false
-            axisTicks:
-              show: false
-            axisBorder:
-              show: true
-              color: rgba(112, 135, 164, 0.5)
-              height: 1
-            labels:
-              style:
-                fontSize: 15px
-                fontWeight: 500
-              offsetX: -1
-              formatter: |
-                EVAL:(timestamp) => {
-                  return new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', month:'short'});
-                }
-          chart:
-            fontFamily: SF Text
-            height: 350px
-          fill:
-            type: gradient
-            gradient:
-              type: vertical
-              shadeIntensity: 0.2
-              opacityFrom: 0.7
-              opacityTo: 0.1
-              stops:
-                - 0
-                - 90
-                - 100
-          stroke:
-            curve: smooth
-            width: 3
-        all_series_config:
-          type: area
-          fill_raw: last
-        series:
-          - entity: sensor.date
-            curve: smooth
-            name: Mattias
-            color: '#9a0ca3'
-            data_generator: !secret apexcharts_github
+      # #github
+      # - type: custom:apexcharts-card
+      #   graph_span: 2.2year
+      #   apex_config:
+      #     yaxis:
+      #       show: true
+      #       decimalsInFloat: 0
+      #       labels:
+      #         style:
+      #           colors:
+      #             - rgba(255, 255, 255, 0.5)
+      #           fontSize: 13px
+      #           fontWeight: 200
+      #         offsetX: -2
+      #     grid:
+      #       show: true
+      #       borderColor: rgba(112, 135, 164, 0.1)
+      #     title:
+      #       text: ⭐ matt8707/hass-config
+      #       style:
+      #         color: white
+      #         fontSize: 30px
+      #         fontWeight: 100
+      #     tooltip:
+      #       style:
+      #         fontSize: 14px
+      #       x:
+      #         show: true
+      #         formatter: |
+      #           EVAL:(timestamp) => {
+      #             let date = new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', year: 'numeric', month:'long'}).toString().split(' ');
+      #             return `${date[0]} ${date[1].charAt(0).toUpperCase() + date[1].slice(1)} ${date[2]}`;
+      #           }
+      #     xaxis:
+      #       tooltip:
+      #         enabled: false
+      #       crosshairs:
+      #         show: false
+      #       axisTicks:
+      #         show: false
+      #       axisBorder:
+      #         show: true
+      #         color: rgba(112, 135, 164, 0.5)
+      #         height: 1
+      #       labels:
+      #         style:
+      #           fontSize: 15px
+      #           fontWeight: 500
+      #         offsetX: -1
+      #         formatter: |
+      #           EVAL:(timestamp) => {
+      #             return new Date(timestamp).toLocaleString('sv-SE',{day: 'numeric', month:'short'});
+      #           }
+      #     chart:
+      #       fontFamily: SF Text
+      #       height: 350px
+      #     fill:
+      #       type: gradient
+      #       gradient:
+      #         type: vertical
+      #         shadeIntensity: 0.2
+      #         opacityFrom: 0.7
+      #         opacityTo: 0.1
+      #         stops:
+      #           - 0
+      #           - 90
+      #           - 100
+      #     stroke:
+      #       curve: smooth
+      #       width: 3
+      #   all_series_config:
+      #     type: area
+      #     fill_raw: last
+      #   series:
+      #     - entity: sensor.date
+      #       curve: smooth
+      #       name: Mattias
+      #       color: '#9a0ca3'
+      #       data_generator: !secret apexcharts_github
 
       #entity counter
       - type: custom:apexcharts-card
@@ -347,7 +346,7 @@ browser_mod:
                     label: Entities
                     fontSize: 15px
                     fontWeight: 800
-                    color: '#ffffff50'
+                    color: "#ffffff50"
         series:
           - entity: sensor.template_domain_counter
             attribute: automation
@@ -373,7 +372,7 @@ browser_mod:
           - entity: sensor.template_domain_counter
             attribute: other
             name: Other
-      
+
       #radial
       - type: grid
         cards:
@@ -400,13 +399,13 @@ browser_mod:
                       offsetY: 5
                       fontSize: 50px
                       fontWeight: 600
-                      color: '#379c55'
+                      color: "#379c55"
                     total:
                       show: true
                       fontSize: 21px
                       fontWeight: 300
                       label: CPU Load
-                      color: '#a8a8a8'
+                      color: "#a8a8a8"
                       formatter: |
                         EVAL:(w) => {
                           return w.globals.seriesTotals + '٪';
@@ -426,14 +425,14 @@ browser_mod:
                     imageClipped: false
                   track:
                     show: true
-                    background: '#222222'
+                    background: "#222222"
                     strokeWidth: 155%
               stroke:
                 dashArray: 3.2
                 lineCap: butt
             series:
               - entity: sensor.template_udm_cpu
-                color: '#379c55'
+                color: "#379c55"
           - type: custom:apexcharts-card
             chart_type: radialBar
             apex_config:
@@ -457,13 +456,13 @@ browser_mod:
                       offsetY: 5
                       fontSize: 50px
                       fontWeight: 600
-                      color: '#379c55'
+                      color: "#379c55"
                     total:
                       show: true
                       fontSize: 21px
                       fontWeight: 300
                       label: CPU Temp
-                      color: '#a8a8a8'
+                      color: "#a8a8a8"
                       formatter: |
                         EVAL:(w) => {
                           return w.globals.seriesTotals + '°';
@@ -484,13 +483,13 @@ browser_mod:
                     imageClipped: false
                   track:
                     show: true
-                    background: '#222222'
+                    background: "#222222"
                     strokeWidth: 155%
               stroke:
                 dashArray: 3.2
                 lineCap: butt
             series:
               - entity: sensor.template_udm_cpu_temp
-                color: '#379c55'
+                color: "#379c55"
         columns: 2
         square: true

@@ -1,24 +1,24 @@
 switch:
-  - platform: wake_on_lan
-    name: wol_imac
-    host: !secret wake_on_lan_host
-    mac: !secret wake_on_lan_mac
+  # - platform: wake_on_lan
+  #   name: wol_imac
+  #   host: !secret wake_on_lan_host
+  #   mac: !secret wake_on_lan_mac
 
-  - platform: command_line
-    scan_interval: 300
-    switches:
-      playstation_5:
-        friendly_name: Playstation
-        command_state: !secret playstation_5_state
-        value_template: >
-          {{ value == 'ON' }}
-        command_on: !secret playstation_5_wake
-        command_off: !secret playstation_5_sleep
+  # - platform: command_line
+  #   scan_interval: 300
+  #   switches:
+  #     playstation_5:
+  #       friendly_name: Playstation
+  #       command_state: !secret playstation_5_state
+  #       value_template: >
+  #         {{ value == 'ON' }}
+  #       command_on: !secret playstation_5_wake
+  #       command_off: !secret playstation_5_sleep
 
-  - platform: mqtt
-    name: switchbot_mqtt
-    command_topic: !secret switchbot_mqtt_command
-    state_topic: !secret switchbot_mqtt_state
+  # - platform: mqtt
+  #   name: switchbot_mqtt
+  #   command_topic: !secret switchbot_mqtt_command
+  #   state_topic: !secret switchbot_mqtt_state
 
   - platform: template
     switches:

@@ -1,7 +1,7 @@
 action: fire-dom-event
 browser_mod:
   command: popup
-  title: Uppdateringar
+  title: Updates
   style:
     .: |
       :host .content {
@@ -26,52 +26,63 @@ browser_mod:
     columns: 1
     square: false
     cards:
-      - type: custom:button-card
-        entity: sensor.hass_version_installed
-        template: updater_hass
+      # - type: custom:button-card
+      #   entity: sensor.hass_version_installed
+      #   template: updater_hass
 
-      - type: custom:button-card
-        entity: sensor.hass_version_installed
-        triggers_update:
-          - sensor.hass_version_latest
-          - sensor.hass_version_latest_beta
-        name: Uppdatera HASS
-        icon: mdi:update
-        styles:
-          card:
-            - width: max-content
-            - filter: >
-                [[[
-                  return `[[[
-                    if (entity) {
-                      return entity.state === states['sensor.hass_version_latest'].state ||
-                        entity.state === states['sensor.hass_version_latest_beta'].state
-                          ? 'opacity(30%)'
-                          : 'drop-shadow(3px 3px 5px #00000050)';
-                    }
-                  ]]]`
-                ]]]
-            - display: >
-                [[[
-                  return `[[[
-                    return entity
-                      ? 'flex'
-                      : 'none';
-                  ]]]`
-                ]]]
-        tap_action:
-          services: |
-            [[[
-              return `[[[
-                hass.callService('browser_mod', 'toast', {
-                  message: 'Startar watchtower...'
-                });
-                hass.callService('switch', 'turn_on', {
-                  entity_id: 'switch.docker_watchtower'
-                });
-              ]]]`
-            ]]]
-        template: icon_name
+      # - type: custom:button-card
+      #   entity: sensor.hass_version_installed
+      #   triggers_update:
+      #     - sensor.hass_version_latest
+      #     - sensor.hass_version_latest_beta
+      #   name: Uppdatera HASS
+      #   icon: mdi:update
+      #   styles:
+      #     card:
+      #       - width: max-content
+      #       - filter: >
+      #           [[[
+      #             return `[[[
+      #               if (entity) {
+      #                 return entity.state === states['sensor.hass_version_latest'].state ||
+      #                   entity.state === states['sensor.hass_version_latest_beta'].state
+      #                     ? 'opacity(30%)'
+      #                     : 'drop-shadow(3px 3px 5px #00000050)';
+      #               }
+      #             ]]]`
+      #           ]]]
+      #       - display: >
+      #           [[[
+      #             return `[[[
+      #               return entity
+      #                 ? 'flex'
+      #                 : 'none';
+      #             ]]]`
+      #           ]]]
+      #   tap_action:
+      #     services: |
+      #       [[[
+      #         return `[[[
+      #           hass.callService('browser_mod', 'toast', {
+      #             message: 'Startar watchtower...'
+      #           });
+      #           hass.callService('switch', 'turn_on', {
+      #             entity_id: 'switch.docker_watchtower'
+      #           });
+      #         ]]]`
+      #       ]]]
+      #   template: icon_name
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Updates
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: update
+              state: "on"
+          exclude: []
 
       - type: custom:button-card
         entity: sensor.hacs
@@ -79,7 +90,7 @@ browser_mod:
 
       - type: custom:button-card
         entity: sensor.hacs
-        name: Öppna HACS
+        name: Öffne HACS
         icon: mdi:open-in-new
         styles:
           card:
@@ -115,12 +126,12 @@ browser_mod:
 
       - type: custom:button-card
         entity: sensor.template_updates
-        name: Kontrollera
+        name: Prüfen
         icon: mdi:reload
         styles:
           card:
             - width: max-content
-            - filter: 'opacity(30%)'
+            - filter: "opacity(30%)"
             - display: >
                 [[[
                   return `[[[
@@ -151,5 +162,5 @@ browser_mod:
               - sensor.playactor_version_latest
               - sensor.kemper_version
               - sensor.udm_unifios
-              - update.nas_dsm_update
+              - update.ds216_dsm_update
         template: icon_name

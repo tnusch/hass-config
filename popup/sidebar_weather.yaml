@@ -1,0 +1,9 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  title: Wetter 
+  card:
+    type: weather-forecast
+    entity: weather.heidelberg
+    show_forecast: true
+    name: Heidelberg

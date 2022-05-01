@@ -1,7 +1,7 @@
 action: fire-dom-event
 browser_mod:
   command: popup
-  title: Matte
+  title: Tim
   style:
     hui-vertical-stack-card:
       $: |
@@ -63,12 +63,12 @@ browser_mod:
         card_mod:
           class: content
         entities:
-          - entity: person.matte
+          - entity: person.tim
             secondary_info: last-changed
 
       - type: history-graph
         entities:
-          - entity: person.matte
+          - entity: person.tim
 
       - type: glance
         show_state: false

@@ -11,7 +11,7 @@ views:
       grid-template-rows: 0 repeat(2, fit-content(100%)) 0fr
       grid-template-areas: |
         "sidebar  .           .       .       ."
-        "sidebar  vardagsrum  studio  sovrum  ."
+        "sidebar  wohnzimmer  studio  sovrum  ."
         "sidebar  media       övrigt  hemma   ."
         "sidebar  footer      footer  footer  ."
       mediaquery:
@@ -23,7 +23,7 @@ views:
           grid-template-areas: |
             ".  .           .        ."
             ".  sidebar     sidebar  ."
-            ".  vardagsrum  sovrum   ."
+            ".  wohnzimmer  sovrum   ."
             ".  studio      övrigt   ."
             ".  media       hemma    ."
             ".  footer      footer   ."
@@ -35,15 +35,14 @@ views:
           grid-template-rows: 0 repeat(3, fit-content(100%)) 0fr
           grid-template-areas: |
             "sidebar  .           .       ."
-            "sidebar  vardagsrum  sovrum  ."
+            "sidebar  wohnzimmer  sovrum  ."
             "sidebar  studio      övrigt  ."
             "sidebar  media       hemma   ."
             "sidebar  footer      footer  ."
             "sidebar  .           .       ."
     cards:
-
       - type: custom:button-card #extra_styles fix
-        styles: {card: [display: none]}
+        styles: { card: [display: none] }
 
       #################################################
       #                                               #
@@ -55,15 +54,24 @@ views:
         view_layout:
           grid-area: sidebar
         cards:
-
           - type: custom:button-card
             entity: sensor.template_sidebar
             template: sidebar
 
+          - type: custom:button-card
+            entity: sensor.template_weather
+            template: sidebar
+            tap_action: !include popup/sidebar_weather.yaml
+
+          - type: custom:button-card
+            entity: sensor.template_seventeentrack_packages
+            template: sidebar
+            tap_action: !include popup/sidebar_seventeentrack_packages.yaml
+
           - type: conditional
             conditions:
               - entity: input_boolean.laundry_display
-                state: 'on'
+                state: "on"
             card:
               type: custom:button-card
               entity: timer.laundry
@@ -76,59 +84,65 @@ views:
 
       #################################################
       #                                               #
-      #                  VARDAGSRUM                   #
+      #                  Wohnzimmer                   #
       #                                               #
       #################################################
 
       - type: grid
-        title: Vardagsrum
+        title: Wohnzimmer
         view_layout:
-          grid-area: vardagsrum
+          grid-area: wohnzimmer
         columns: 2
         cards:
-
           - type: custom:button-card
-            entity: light.group_belysning
-            name: Belysning
-            template:
-              - light
-              - icon_hue
-
-          - type: custom:button-card
-            entity: light.horna
-            name: Hörnlampa
+            entity: light.wohnzimmer
+            name: Wohnen
             template:
               - light
               - icon_shade
 
           - type: custom:button-card
-            entity: media_player.sony_bravia_tv
-            name: Tv
-            state_display: >
-              [[[
-                if (variables.state === 'playing') {
-                  return 'På';
-                }
-                if (variables.state === true) {
-                  return variables.translate_unknown;
-                }
-              ]]]
-            hold_action:
-              !include popup/vardagsrum_tv.yaml
+            entity: light.esszimmer
+            name: Essen
             template:
-              - base
-              - icon_tv
-              - loader
+              - light
+              - icon_hue
 
           - type: custom:button-card
-            entity: switch.deltaco_sh_p01
-            name: Balkong
-            hold_action:
-              !include popup/vardagsrum_balkong.yaml
+            entity: sensor.wohnzimmer
+            name: Wohnen
             template:
-              - base
-              - icon_hue
-              - loader
+              - multisensor
+              - icon_multisensor
+
+          # - type: custom:button-card
+          #   entity: media_player.sony_bravia_tv
+          #   name: Tv
+          #   state_display: >
+          #     [[[
+          #       if (variables.state === 'playing') {
+          #         return 'På';
+          #       }
+          #       if (variables.state === true) {
+          #         return variables.translate_unknown;
+          #       }
+          #     ]]]
+          #   hold_action:
+          #     !include popup/wohnzimmer_tv.yaml
+          #   template:
+          #     - base
+          #     - icon_tv
+          #     - loader
+
+          # - type: custom:button-card
+          #   entity: switch.deltaco_sh_p01
+          #   name: Balkong
+          #   hold_action:
+          #     !include popup/wohnzimmer_balkong.yaml
+          #   template:
+          #     - base
+          #     - icon_hue
+          #     - loader
 
       #################################################
       #                                               #
@@ -142,13 +156,12 @@ views:
           grid-area: studio
         columns: 2
         cards:
-
           - type: custom:button-card
-            entity: light.dator
-            name: Datorlampa
+            entity: sensor.badezimmer
+            name: Bad
             template:
-              - light
-              - icon_hue
+              - multisensor
+              - icon_multisensor
 
           - type: custom:button-card
             entity: light.group_taklampor
@@ -160,8 +173,7 @@ views:
           - type: custom:button-card
             entity: switch.computer_imac
             name: Dator
-            hold_action:
-              !include popup/studio_dator.yaml
+            hold_action: !include popup/studio_dator.yaml
             template:
               - base
               - icon_imac
@@ -182,8 +194,7 @@ views:
           - type: custom:button-card
             entity: switch.gosund_monitors_switch
             name: Monitorer
-            hold_action:
-              !include popup/studio_monitorer.yaml
+            hold_action: !include popup/studio_monitorer.yaml
             template:
               - base
               - icon_monitors
@@ -208,7 +219,6 @@ views:
           grid-area: sovrum
         columns: 2
         cards:
-
           - type: custom:button-card
             entity: light.group_sanglampor
             name: Sänglampor
@@ -219,8 +229,7 @@ views:
           - type: custom:button-card
             entity: climate.ac
             name: Klimat
-            hold_action:
-              !include popup/sovrum_klimat.yaml
+            hold_action: !include popup/sovrum_klimat.yaml
             template:
               - base
               - icon_climate
@@ -238,8 +247,7 @@ views:
           - type: custom:button-card
             entity: switch.playstation_5
             name: Playstation
-            hold_action:
-              !include popup/vardagsrum_playstation.yaml
+            hold_action: !include popup/vardagsrum_playstation.yaml
             template:
               - base
               - icon_ps5
@@ -248,8 +256,7 @@ views:
           - type: custom:button-card
             entity: media_player.samsung_tv
             name: "Tv\u00B2"
-            hold_action:
-              !include popup/sovrum_tv2.yaml
+            hold_action: !include popup/sovrum_tv2.yaml
             template:
               - base
               - icon_tv
@@ -267,34 +274,34 @@ views:
           grid-area: media
         columns: 1
         cards:
-
           - type: custom:swipe-card
             parameters:
               speed: 550
               spaceBetween: 40
               threshold: 5
             cards:
-
               - type: horizontal-stack
                 cards:
-
                   - type: conditional
                     conditions:
                       - entity: select.conditional_media
-                        state_not: Vardagsrum
+                        state_not: Wohnzimmer
 
                       - entity: select.conditional_media
-                        state_not: Sovrum
+                        state_not: Badezimmer
 
                       - entity: select.conditional_media
-                        state_not: Spotify
+                        state_not: Fernseher im Wohnzimmer
 
                       - entity: select.conditional_media
-                        state_not: Kök
+                        state_not: receiver
+
+                      - entity: select.conditional_media
+                        state_not: Onkyo TX-NR676E EAAA8F
                     card:
                       type: custom:button-card
-                      entity: sensor.plex_recently_added
-                      name: Senast tillagt
+                      entity: sensor.trakt_upcoming_calendar
+                      name: Nächste Episode
                       tap_action:
                         action: none
                       template:
@@ -304,78 +311,88 @@ views:
                   - type: conditional
                     conditions:
                       - entity: select.conditional_media
-                        state: Vardagsrum
+                        state: Wohnzimmer
                     card:
                       type: custom:button-card
-                      entity: media_player.vardagsrum
-                      template:
-                        - conditional_media
-                        - icon_apple_tv
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Sovrum
-                    card:
-                      type: custom:button-card
-                      entity: media_player.sovrum
-                      template:
-                        - conditional_media
-                        - icon_apple_tv
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Spotify
-                    card:
-                      type: custom:button-card
-                      entity: media_player.spotify
-                      template:
-                        - conditional_media
-                        - icon_spotify
-
-                  - type: conditional
-                    conditions:
-                      - entity: select.conditional_media
-                        state: Kök
-                    card:
-                      type: custom:button-card
-                      entity: media_player.kok
+                      entity: media_player.wohnzimmer
                       template:
                         - conditional_media
                         - icon_nest_mini
 
+                  - type: conditional
+                    conditions:
+                      - entity: select.conditional_media
+                        state: Badezimmer
+                    card:
+                      type: custom:button-card
+                      entity: media_player.badezimmer
+                      template:
+                        - conditional_media
+                        - icon_nest_mini
+
+                  - type: conditional
+                    conditions:
+                      - entity: select.conditional_media
+                        state: Fernseher im Wohnzimmer
+                    card:
+                      type: custom:button-card
+                      entity: media_player.fernseher_im_wohnzimmer_2
+                      template:
+                        - conditional_media
+                        - icon_tv
+
+                  - type: conditional
+                    conditions:
+                      - entity: select.conditional_media
+                        state: Onkyo TX-NR676E EAAA8F
+                    card:
+                      type: custom:button-card
+                      entity: media_player.onkyo_tx_nr676e_eaaa8f
+                      template:
+                        - conditional_media
+                        - icon_tv
+
+                  - type: conditional
+                    conditions:
+                      - entity: select.conditional_media
+                        state: receiver
+                    card:
+                      type: custom:button-card
+                      entity: media_player.receiver
+                      template:
+                        - conditional_media
+                        - icon_tv
+
               - type: grid
                 columns: 2
                 cards:
-
                   - type: custom:button-card
-                    entity: media_player.vardagsrum
-                    name: Vardagsrum
-                    template:
-                      - media
-                      - icon_apple_tv
-
-                  - type: custom:button-card
-                    entity: media_player.sovrum
-                    name: Sovrum
-                    template:
-                      - media
-                      - icon_apple_tv
-
-                  - type: custom:button-card
-                    entity: media_player.spotify
-                    name: Spotify
-                    template:
-                      - media
-                      - icon_spotify
-
-                  - type: custom:button-card
-                    entity: media_player.kok
-                    name: Nest Mini
+                    entity: media_player.wohnzimmer
+                    name: Wohnzimmer
                     template:
                       - media
                       - icon_nest_mini
+
+                  - type: custom:button-card
+                    entity: media_player.badezimmer
+                    name: Badezimmer
+                    template:
+                      - media
+                      - icon_nest_mini
+
+                  - type: custom:button-card
+                    entity: media_player.fernseher_im_wohnzimmer_2
+                    name: Fernseher im Wohnzimmer
+                    template:
+                      - media
+                      - icon_tv
+
+                  - type: custom:button-card
+                    entity: media_player.onkyo_tx_nr676e_eaaa8f
+                    name: Onkyo Receiver
+                    template:
+                      - media
+                      - icon_tv
 
       #################################################
       #                                               #
@@ -389,7 +406,6 @@ views:
           grid-area: övrigt
         columns: 2
         cards:
-
           - type: custom:button-card
             entity: light.group_badrum
             name: Badrum
@@ -400,8 +416,7 @@ views:
           - type: custom:button-card
             entity: switch.gosund_fan_switch
             name: "Fläkt\u00B2"
-            hold_action:
-              !include popup/studio_flakt.yaml
+            hold_action: !include popup/studio_flakt.yaml
             template:
               - base
               - icon_fan2
@@ -428,37 +443,34 @@ views:
       #################################################
 
       - type: grid
-        title: Hemma
+        title: Zu Hause
         view_layout:
           grid-area: hemma
         columns: 2
         cards:
-
           - type: custom:button-card
-            entity: person.matte
-            name: Mattias
+            entity: person.tim
+            name: Tim
             triggers_update:
-              - sensor.matte_last_changed
-            tap_action:
-              !include popup/hemma_mattias.yaml
+              - sensor.tim_last_changed
+            tap_action: !include popup/home_tim.yaml
             variables:
-              retain: sensor.matte_last_changed
+              retain: sensor.tim_last_changed
             template: person
 
           - type: custom:button-card
-            entity: person.sanja
-            name: Sanja
+            entity: person.clarissa
+            name: Clarissa
             triggers_update:
-              - sensor.sanja_last_changed
-            tap_action:
-              !include popup/hemma_sanja.yaml
+              - sensor.clarissa_last_changed
+            tap_action: !include popup/hemma_sanja.yaml
             variables:
-              retain: sensor.sanja_last_changed
+              retain: sensor.clarissa_last_changed
             template: person
 
           - type: custom:button-card
             entity: script.home_leave
-            name: Stäng allt
+            name: Alles schließen
             hold_action:
               action: none
             template:
@@ -467,7 +479,7 @@ views:
 
           - type: custom:button-card
             entity: script.home_arrive
-            name: Hemma
+            name: Zu Hause
             hold_action:
               action: none
             template:
@@ -484,19 +496,17 @@ views:
         view_layout:
           grid-area: footer
         cards:
-
           - type: custom:button-card
             name: >
-              <ha-icon icon="mdi:nas"></ha-icon> NAS
-            tap_action:
-              !include popup/footer/nas.yaml
+              <ha-icon icon="mdi:nas"></ha-icon> Info
+            tap_action: !include popup/footer/nas.yaml
             variables:
               notify: >
                 [[[
-                  let status = states['sensor.nas_volume_1_status'],
-                    security = states['binary_sensor.nas_security_status'],
+                  let status = states['sensor.ds216plus_volume_1_status'],
+                    security = states['binary_sensor.ds216plus_security_status'],
                     disk_use = states['sensor.disk_use_percent'],
-                    nas_update = states['binary_sensor.nas_update_available'];
+                    nas_update = states['binary_sensor.ds216plus_update_available'];
                   if (status && security && disk_use && nas_update) {
                     return nas_update.state === 'on'
                       ? 1
@@ -509,9 +519,8 @@ views:
 
           - type: custom:button-card
             name: >
-              <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Uppdatera
-            tap_action:
-              !include popup/footer/updater.yaml
+              <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Updates
+            tap_action: !include popup/footer/updater.yaml
             variables:
               notify: >
                 [[[
@@ -536,13 +545,12 @@ views:
 
           - type: custom:button-card
             name: >
-              <ha-icon icon="mdi:robot-vacuum-variant"></ha-icon> Städa
-            tap_action:
-              !include popup/footer/vacuum.yaml
+              <ha-icon icon="mdi:robot-vacuum-variant"></ha-icon> Robi
+            tap_action: !include popup/footer/vacuum.yaml
             variables:
               notify: >
                 [[[
-                  let last_clean = states['sensor.morty_last_clean_end'],
+                  let last_clean = states['sensor.robi_last_clean_end'],
                     week_ms = 6048e5;
                   if (last_clean) {
                     return (Date.now() - Date.parse(last_clean.state)) > week_ms;
@@ -550,18 +558,16 @@ views:
                 ]]]
             template: footer
 
-          - type: custom:button-card
-            name: >
-              <ha-icon icon="mdi:chart-line-variant"></ha-icon> Historik
-            tap_action:
-              !include popup/footer/history.yaml
-            template: footer
+          # - type: custom:button-card
+          #   name: >
+          #     <ha-icon icon="mdi:chart-line-variant"></ha-icon> Historik
+          #   tap_action: !include popup/footer/history.yaml
+          #   template: footer
 
           - type: custom:button-card
             name: >
-              <ha-icon icon="mdi:tablet"></ha-icon> Platta
-            tap_action:
-              !include popup/footer/tablet.yaml
+              <ha-icon icon="mdi:tablet"></ha-icon> Tablet
+            tap_action: !include popup/footer/tablet.yaml
             variables:
               notify: >
                 [[[
@@ -572,35 +578,33 @@ views:
                 ]]]
             template: footer
 
-          - type: custom:button-card
-            name: >
-              <ha-icon icon="mdi:router-wireless"></ha-icon> Router
-            tap_action:
-              !include popup/footer/router.yaml
-            variables:
-              notify: >
-                [[[
-                  let internet = states['binary_sensor.template_udm_internet'],
-                    upgradable = states['binary_sensor.template_udm_upgradable'];
-                  if (internet && upgradable) {
-                    return upgradable.state === 'on'
-                      ? 1
-                      : internet.state === 'off';
-                  }
-                ]]]
-            template: footer
+          # - type: custom:button-card
+          #   name: >
+          #     <ha-icon icon="mdi:router-wireless"></ha-icon> Router
+          #   tap_action: !include popup/footer/router.yaml
+          #   variables:
+          #     notify: >
+          #       [[[
+          #         let internet = states['binary_sensor.template_udm_internet'],
+          #           upgradable = states['binary_sensor.template_udm_upgradable'];
+          #         if (internet && upgradable) {
+          #           return upgradable.state === 'on'
+          #             ? 1
+          #             : internet.state === 'off';
+          #         }
+          #       ]]]
+          #   template: footer
 
-          - type: custom:button-card
-            name: >
-              <ha-icon icon="mdi:raspberry-pi"></ha-icon> RPi
-            tap_action:
-              !include popup/footer/rpi.yaml
-            variables:
-              notify: >
-                [[[
-                  let ping = states['binary_sensor.rpi_ping'];
-                  if (ping) {
-                    return ping.state === 'off';
-                  }
-                ]]]
-            template: footer
+          # - type: custom:button-card
+          #   name: >
+          #     <ha-icon icon="mdi:raspberry-pi"></ha-icon> RPi
+          #   tap_action: !include popup/footer/rpi.yaml
+          #   variables:
+          #     notify: >
+          #       [[[
+          #         let ping = states['binary_sensor.rpi_ping'];
+          #         if (ping) {
+          #           return ping.state === 'off';
+          #         }
+          #       ]]]
+          #   template: footer

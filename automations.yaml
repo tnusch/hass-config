@@ -1,0 +1,11 @@
+- id: "1637874267399"
+  alias: System - Set Custom Theme at Startup
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - service: frontend.set_theme
+      data:
+        name: tablet
+  initial_state: true
+  mode: single

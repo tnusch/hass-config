@@ -1,147 +1,230 @@
-homeassistant:
-  name: Hem
-  latitude: !secret homeassistant_latitude
-  longitude: !secret homeassistant_longitude
-  elevation: !secret homeassistant_elevation
-  unit_system: metric
-  temperature_unit: C
-  time_zone: Europe/Stockholm
-  currency: SEK
-  packages: !include_dir_named include
-  allowlist_external_dirs:
-    - /config
-
+# Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
-lovelace:
-  mode: yaml
-  resources:
-    [ { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
-      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
-      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
-      { url: /hacsfiles/kiosk-mode/kiosk-mode.js,                                   type: module },
-      { url: /hacsfiles/light-entity-card/light-entity-card.js,                     type: module },
-      { url: /hacsfiles/light-popup-card/light-popup-card.js,                       type: module },
-      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
-      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
-      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
-      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
+# Text to speech
+tts:
+  - platform: google_translate
 
-      { url: '/local/calendar-card.js?v=3.109.1',                                   type: module },
-      { url: '/local/custom_icons.js?v=28082021',                                   type: module },
-      { url: '/local/marked.min.js?v=4.0.12',                                       type: module },
-      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
-      { url: /local/font.css,                                                       type: css    } ]
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_host
+    token: !secret xiaomi_token
+    username: !secret xiaomi_username
+    password: !secret xiaomi_password
+    country: "de"
+    colors:
+      color_robo: [224, 224, 224]
+      color_charger: [27, 117, 27]
+      color_path: [30, 80, 113]
+      color_goto_path: [30, 80, 113]
+      color_map_wall_v2: [30, 30, 30]
+      color_obstacle: [30, 30, 30]
+      color_virtual_walls: [255, 0, 0, 60]
+      color_no_go_zones_outline: [255, 0, 0, 60]
+      color_no_go_zones: [255, 0, 0, 28]
+      color_scan: [0, 0, 0, 0]
+      color_map_inside: [0, 0, 0, 0]
+      color_map_outside: [0, 0, 0, 0]
+      color_grey_wall: [0, 0, 0, 0]
+      color_map_wall: [0, 0, 0, 0]
+    room_colors:
+      1: [42, 46, 48]
+      2: [42, 46, 48]
+      3: [42, 46, 48]
+      4: [42, 46, 48]
+      5: [42, 46, 48]
+    draw: ["all"]
+    map_transformation:
+      scale: 2
+      trim:
+        top: 16
+        right: 22
+        bottom: 25
+        left: 21
+    sizes:
+      charger_radius: 10
+      vacuum_radius: 10
+    attributes:
+      - calibration_points
+
+device_tracker:
+  - platform: ping
+    hosts:
+      laptop_tim: !secret laptop_tim
+      handy_clarissa: !secret handy_clarissa
+      handy_tim: !secret handy_tim
+      uhr_tim: !secret uhr_tim
+      pc_tim: !secret pc_tim
+
+wake_on_lan:
+
+switch:
+  - platform: wake_on_lan
+    mac: !secret mac_pc_tim
+    name: WOL PC Tim
+  - platform: wake_on_lan
+    mac: !secret mac_drucker
+    name: WOL Drucker
+
+# python_script:
+
+browser_mod:
+  prefix: browser_
 
 logger:
-  default: warning
+  default: info
   logs:
-    homeassistant.components.websocket_api: fatal
-    homeassistant.components.camera: fatal
-    homeassistant.helpers.entity: fatal
-
-recorder:
-  db_url: !secret recorder_db_url
-  purge_keep_days: 5
-  commit_interval: 30
-  exclude:
-    entity_globs:
-      - sensor.browser_*
-
-person:
-  - name: Matte
-    id: matte
-    device_trackers:
-      - device_tracker.mattias_iphone_unifi
-      - device_tracker.mattias_iphone_ios
-
-  - name: Sanja
-    id: sanja
-    device_trackers:
-      - device_tracker.sanjas_iphone_unifi
-      - device_tracker.sanjas_iphone_ios
-
-smartir:
-  check_updates: false
-
-climate:
-  - platform: smartir
-    name: AC
-    unique_id: EXP26U758CW
-    device_code: 1703
-    controller_data: remote.broadlink_remote
-    temperature_sensor: sensor.broadlink_rm4_pro_temperature
-    humidity_sensor: sensor.broadlink_rm4_pro_humidity
-    power_sensor: binary_sensor.gosund_ac_power_state
-    power_sensor_restore_state: true
-
-influxdb:
-  host: !secret influxdb_host
-  precision: s
-  include:
-    entities:
-      - sensor.mattias_weight
-      - sensor.sanja_weight
-
-waste_collection_schedule:
-  sources:
-    - name: ics
-      args:
-        url: !secret waste_collection_schedule_url
-
-wemo:
-  discovery: false
-  static: !secret wemo_static
-
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
+    homeassistant.components.yamaha: critical
+    custom_components.my_integration: critical
 
 google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
 
-calendar:
-  - platform: caldav
-    username: !secret caldav_username
-    password: !secret caldav_password
-    url: https://caldav.icloud.com
+waste_collection_schedule:
+  sources:
+    name: ics
+    args:
+      url: "https://www.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalte/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=707245001&AboID=23908"
+    customize:
+      - type: Mobile Schadstoffsammlung
+        alias: Schadstoffe
+      - type: Biobehaelter
+        alias: Bio
+      - type: Restabfallbehaelter
+        alias: Restabfall
+      - type: Wertstoffbehaelter
+        alias: Wertstoff
 
-browser_mod:
-  prefix: browser_
+bring_shopping_list:
+  lists:
+    - id: !secret bring_list_id
+      name: Zuhause
+      locale: de-DE
 
-timer:
-  laundry:
-    duration: 01:00:00
-    icon: mdi:washing-machine
-    restore: true
+media_player:
+  - platform: onkyo
+    host: !secret onkyo_receiver
+    name: receiver
 
-notify:
-  - name: ALL_DEVICES
-    platform: group
-    services:
-      - service: mobile_app_mattias_iphone_ios
-      - service: mobile_app_mattias_imac
-      - service: mobile_app_sanja_iphone
+homeassistant:
+  name: Startseite
+  packages: !include_dir_named include #theme
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  temperature_unit: C
+  time_zone: Europe/Berlin
+  currency: EUR
+  allowlist_external_dirs:
+    - /config
+  legacy_templates: false
 
-monitor_docker:
-  - name: Docker
-    monitored_conditions: [allinone]
-    scan_interval: 120
+lovelace:
+  mode: yaml #use ui-lovelace.yaml
+  resources: #hacs
+    [
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module },
+      { url: /hacsfiles/bar-card/bar-card.js, type: module },
+      { url: /hacsfiles/button-card/button-card.js, type: module },
+      { url: /hacsfiles/kiosk-mode/kiosk-mode.js, type: module },
+      { url: /hacsfiles/light-entity-card/light-entity-card.js, type: module },
+      { url: /hacsfiles/light-popup-card/light-popup-card.js, type: module },
+      {
+        url: "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?v=0.10.0",
+        type: module,
+      },
+      { url: /hacsfiles/lovelace-card-mod/card-mod.js, type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js, type: module },
+      {
+        url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,
+        type: module,
+      },
+      {
+        url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,
+        type: module,
+      },
+      { url: /hacsfiles/swipe-card/swipe-card.js, type: module },
+      { url: /hacsfiles/lovelace-auto-entities/auto-entities.js, type: module },
+      { url: "/local/calendar-card.js?v=3.109.1", type: module },
+      { url: "/local/custom_icons.js?v=28082021", type: module },
+      { url: "/local/marked.min.js?v=4.0.12", type: module },
+      { url: "/local/vanilla-tilt.min.js?v=1.7.2", type: module },
+      { url: /local/font.css, type: css },
+      { url: /browser_mod.js, type: module },
+      {
+        url: /hacsfiles/seventeen-track-card/seventeen-track-card.js,
+        type: module,
+      },
+      {
+        url: "/hacsfiles/upcoming-media-card/upcoming-media-card.js?v=0.1.1",
+        type: module,
+      },
+    ]
 
-  - name: RPi Docker
-    url: !secret monitor_docker_rpi_url
-    monitored_conditions: [allinone]
-    scan_interval: 120
+recorder:
+  purge_keep_days: 2
+  commit_interval: 30
+  exclude:
+    domains:
+      - device_tracker
+      - media_player
+      - uptime
+      - time_date
+      - worldclock
+      - button
+      - automation
+      - calendar
+      - input_select
+      - remote
+      - switch
+      - update
+    entity_globs:
+      - sensor.clock*
+      - sensor.date*
+      - sensor.glances*
+      - sensor.load_*m
+      - sensor.time*
+      - sensor.uptime*
+      - sensor.hass*
+      - sensor.next*
+      - sensor.*version
+      - weather.*
+      - sensor.browser_*
+      - light.browser_*
+      - media_player.browser_*
+      - binary_sensor.arris*
+      - sensor.arris*
+      - sensor.template_*
+      # - sensor.ds216plus*
+    entities:
+      # - camera.front_door
+      - sensor.home_assistant_v2_db
+      - sensor.memory_free
+      - sensor.memory_use
+      - sensor.memory_use_percent
+      - sensor.processor_use
+      - weather.openweathermap
+      - sun.sun
+      - sensor.template_imac_uptime
+      - sensor.template_sidebar
+      - camera.xiaomi_cloud_map_extractor
+      - sensor.home_assistant_log
 
-lock:
-  - platform: template
-    name: Dator
-    value_template: >
-      {{ states('input_boolean.computer_lock') }}
-    lock:
-      service: input_boolean.turn_on
-      entity_id: input_boolean.computer_lock
-    unlock:
-      service: input_boolean.turn_off
-      entity_id: input_boolean.computer_lock
+person:
+  - name: Tim
+    id: tim
+    device_trackers:
+      - device_tracker.handy_tim
+      - device_tracker.uhr_tim
+
+  - name: Clarissa
+    id: clarissa
+    device_trackers:
+      - device_tracker.handy_clarissa
