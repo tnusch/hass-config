@@ -552,11 +552,11 @@ template:
           icon: mdi:memory
           unit_of_measurement: "%"
 
-    ####################################################
-    #                                                  #
-    #                  CUSTOM                          #
-    #                                                  #
-    ####################################################
+      ####################################################
+      #                                                  #
+      #                  CUSTOM                          #
+      #                                                  #
+      ####################################################
 
       - unique_id: weather
         state: template
@@ -660,3 +660,12 @@ template:
         device_class: timestamp
         state: >
           {{ state_attr('sensor.backup_state', 'last_backup') }}
+      - unique_id: all_updates
+        name: All updates
+        icon: mdi:update
+        state: >
+          {% set hacs = states('sensor.hacs') | int %}
+          {% set updaters = states.update 
+            | selectattr('state','eq','on')
+            | map(attribute = 'entity_id') | list | length | int  %}
+          {{ hacs + updaters }}
