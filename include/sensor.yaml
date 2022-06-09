@@ -161,3 +161,14 @@ sensor:
   #   value_template: >
   #     {{ value.split(' ')[1].split('v')[1] }}
   #   scan_interval: 86400
+
+  ####################################################
+  #                                                  #
+  #                   RMV                            #
+  #                                                  #
+  ####################################################
+
+  - platform: rmvtransport
+    next_departure:
+      - name: bad_schoenborn_kronau
+        station: 8004032

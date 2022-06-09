@@ -68,6 +68,11 @@ views:
             template: sidebar
             tap_action: !include popup/sidebar_seventeentrack_packages.yaml
 
+          - type: custom:button-card
+            entity: sensor.bad_schonborn_kronau
+            template: sidebar
+            tap_action: !include popup/sidebar_departures.yaml
+
           - type: conditional
             conditions:
               - entity: input_boolean.laundry_display
@@ -299,15 +304,9 @@ views:
                       - entity: select.conditional_media
                         state_not: Onkyo TX-NR676E EAAA8F
                     card:
-                      type: custom:button-card
+                      type: custom:upcoming-media-card
                       entity: sensor.trakt_upcoming_calendar
-                      name: Nächste Episode
-                      tap_action:
-                        action: none
-                      template:
-                        - conditional_media
-                        - icon_plex
-
+                      max: 1
                   - type: conditional
                     conditions:
                       - entity: select.conditional_media

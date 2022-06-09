@@ -1,0 +1,10 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  title: Abfahrtsmonitor
+  card:
+    type: custom:rmv-card
+    entity:
+      - sensor.bad_schoenborn_kronau
+    friendly_name: Bad Schönborn-Kronau
+    show_time: true

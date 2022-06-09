@@ -19,3 +19,5 @@ home-assistant.log*
 secrets*
 
 home-assistant_v2.db*
+
+addons_config

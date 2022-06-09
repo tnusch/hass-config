@@ -670,3 +670,25 @@ template:
             | selectattr('state','eq','on')
             | map(attribute = 'entity_id') | list | length | int  %}
           {{ hacs + updaters }}
+      - unique_id: bad_schoenborn_departures
+        # name: Bad Schönborn-Kronau
+        # icon: mdi:train
+        state: template
+        attributes:
+          departures: |
+            {% set now = as_timestamp(now()) %}
+            {% set dep_0_line = state_attr('sensor.bad_schoenborn_kronau', 'line') %}
+            {% set dep_0_dir = state_attr('sensor.bad_schoenborn_kronau', 'direction') %}
+            {% set dep_0_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'departure_time')) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_0_time = state_attr('sensor.bad_schoenborn_kronau', 'departure_time')|string %}
+            {% set dep_1_line = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].line %}
+            {% set dep_1_dir = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].direction %}
+            {% set dep_1_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].departure_time) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_1_time = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].departure_time|string %}
+            {% set dep_2_line = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].line %}
+            {% set dep_2_dir = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].direction %}
+            {% set dep_2_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].departure_time) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_2_time = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].departure_time|string %}
+            {{ dep_0_line ~ ' ' ~ dep_0_dir ~ ' - ' ~ dep_0_min ~ ' min (' ~ dep_0_time[11:16] ~ ')'}}<br>
+            {{ dep_1_line ~ ' ' ~ dep_1_dir ~ ' - ' ~ dep_1_min ~ ' min (' ~ dep_1_time[11:16] ~ ')'}}<br>
+            {{ dep_2_line ~ ' ' ~ dep_2_dir ~ ' - ' ~ dep_2_min ~ ' min (' ~ dep_2_time[11:16] ~ ')'}}
