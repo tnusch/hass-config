@@ -8,14 +8,14 @@ settings:
   variables:
     entity_tablet: switch.galaxy_tab_a_screensaver
     entity_browser_mod: media_player.browser_dd239c79_406b9d77
-    translate_unknown: Unbekannt
+    translate_unknown: Okänt
     translate_idle: Inaktiv
     translate_home: Ja
-    translate_not_home: Nein
-    translate_available: Verfügbar
-    translate_no_updates: Keine Updates
-    translate_update_available: Update verfügbar
-    translate_updates_available: Updates verfügbar
+    translate_not_home: Nej
+    translate_available: tillgänglig
+    translate_no_updates: Inga uppdateringar
+    translate_update_available: uppdatering tillgänglig
+    translate_updates_available: uppdateringar tillgängliga
 
 #################################################
 #                                               #
@@ -711,24 +711,34 @@ updater_hacs:
   state_display: |
     [[[
       if (entity) {
-        let output = '',
-          hacs_version = states['sensor.template_hacs_version'] || undefined;
-        var arr = entity.attributes.repositories === undefined
-          ? []
-          : entity.attributes.repositories;
-        for (var i = 0; i < arr.length; i++) {
-          output += `<li><b><a href="#" onclick="window.open('https://github.com/${arr[i].name}/releases');">
-            ${arr[i].display_name}</a></b> ${arr[i].installed_version} <b>&rarr;</b> ${arr[i].available_version}</li>`
-        }
-        let count = arr.length;
-        let subtitle = count === 0
-          ? `${variables.translate_no_updates} ${hacs_version === undefined || hacs_version.state === 'unknown' ? ' ' : `<b>&larr;</b> ${hacs_version.state}`}`
-          : `${count} ${count === 1 ? variables.translate_update_available : variables.translate_updates_available} ${String.fromCodePoint('0x1f389')}`;
-        return `
-          <ha-icon icon="hacs:hacs"></ha-icon> <span class="title">Community Store</span><br>
-          <p class="subtitle">${subtitle}</p>
-          <ul>${output}</ul>
-        `;
+          let output = '',
+              count = parseInt(entity.state) || 0,
+              subtitle = count === 0
+                  ? `${variables.translate_no_updates} <b>&larr;</b> ${states['update.hacs_update'].attributes.installed_version || ''}`
+                  : `${count} ${count === 1 ? variables.translate_update_available : variables.translate_updates_available} ${String.fromCodePoint('0x1f389')}`;
+
+          Object.keys(states).forEach(key => {
+            let s = states[key],
+                e = s.entity_id,
+                a = s.attributes;
+
+            if (e.includes('update.') && s.state === 'on' && a.release_url) {
+                let split_url = a.release_url.split('/'),
+                    name = `${split_url[3]}/${split_url[4]}`,
+                    installed = states['sensor.hacs_installed'].attributes.repositories;
+
+                if (installed.includes(name)) {
+                    output += `<li><b><a href="#" onclick="window.open('${a.release_url}');">
+                    ${name}</a></b> ${a.installed_version} <b>&rarr;</b> ${a.latest_version}</li>`
+                }
+            }
+          });
+
+          return `
+            <ha-icon icon="hacs:hacs"></ha-icon> <span class="title">Community Store</span><br>
+            <p class="subtitle">${subtitle}</p>
+            <ul>${output}</ul>
+          `;
       }
     ]]]
 
@@ -2320,65 +2330,3 @@ icon_home:
           </svg>
         `;
       ]]]
-
-icon_youtube:
-  custom_fields:
-    icon: >
-      <svg viewBox="0 0 50 50">
-        <path d="M 12 4 C 12 4 5.7455469 3.9999687 4.1855469 4.4179688 C 3.3245469 4.6479688 2.6479687 5.3255469 2.4179688 6.1855469 C 1.9999687 7.7455469 2 12 2 12 C 2 12 1.9999687 16.254453 2.4179688 17.814453 C 2.6479687 18.675453 3.3255469 19.352031 4.1855469 19.582031 C 5.7455469 20.000031 12 20 12 20 C 12 20 18.254453 20.000031 19.814453 19.582031 C 20.674453 19.352031 21.352031 18.674453 21.582031 17.814453 C 22.000031 16.254453 22 12 22 12 C 22 12 22.000031 7.7455469 21.582031 6.1855469 C 21.352031 5.3255469 20.674453 4.6479688 19.814453 4.4179688 C 18.254453 3.9999687 12 4 12 4 z M 12 6 C 14.882 6 18.490875 6.1336094 19.296875 6.3496094 C 19.465875 6.3946094 19.604391 6.533125 19.650391 6.703125 C 19.891391 7.601125 20 10.342 20 12 C 20 13.658 19.891391 16.397875 19.650391 17.296875 C 19.605391 17.465875 19.466875 17.604391 19.296875 17.650391 C 18.491875 17.866391 14.882 18 12 18 C 9.119 18 5.510125 17.866391 4.703125 17.650391 C 4.534125 17.605391 4.3956094 17.466875 4.3496094 17.296875 C 4.1086094 16.398875 4 13.658 4 12 C 4 10.342 4.1086094 7.6011719 4.3496094 6.7011719 C 4.3946094 6.5331719 4.533125 6.3946094 4.703125 6.3496094 C 5.508125 6.1336094 9.118 6 12 6 z M 10 8.5351562 L 10 15.464844 L 16 12 L 10 8.5351562 z"/>
-      </svg>
-
-icon_multisensor:
-  custom_fields:
-    icon: >
-      <svg viewBox="0 0 30 30">
-        <path fill="var(--light-color)" d="M15 13V5A3 3 0 0 0 9 5V13A5 5 0 1 0 15 13M12 4A1 1 0 0 1 13 5V8H11V5A1 1 0 0 1 12 4Z"/>
-      </svg>
-
-#################################################
-#                                               #
-#                     MULTISENSOR             #
-#                                               #
-#################################################
-
-multisensor:
-  template:
-    - base
-  #   - circle
-  variables:
-    circle_input: >
-      [[[ return Math.round(entity.attributes.humidity); ]]]
-    humid: >
-      [[[ return entity.attributes.humidity > 70 ]]]
-  custom_fields:
-    circle: >
-      [[[
-          let input = variables.circle_input,
-            radius = 20.5,
-            circumference = radius * 2 * Math.PI;
-          return `
-            <svg viewBox="0 0 50 50">
-              <style>
-                circle {
-                  transform: rotate(-90deg);
-                  transform-origin: 50% 50%;
-                  stroke-dasharray: ${circumference};
-                  stroke-dashoffset: ${circumference - input / 100 * circumference};
-                }
-                tspan {
-                  font-size: 10px;
-                }
-              </style>
-              <circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" />
-              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">%</tspan></text>
-            </svg>
-          `;
-      ]]]
-  styles:
-    card:
-      - background-color: >
-          [[[
-            return variables.humid ?
-              'rgba(65, 105, 225, 0.2)' :
-              'rgba(115, 115, 115, 0.2)';
-          ]]]
