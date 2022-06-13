@@ -8,14 +8,14 @@ settings:
   variables:
     entity_tablet: switch.galaxy_tab_a_screensaver
     entity_browser_mod: media_player.browser_dd239c79_406b9d77
-    translate_unknown: Okänt
+    translate_unknown: Unbekannt
     translate_idle: Inaktiv
     translate_home: Ja
-    translate_not_home: Nej
-    translate_available: tillgänglig
-    translate_no_updates: Inga uppdateringar
-    translate_update_available: uppdatering tillgänglig
-    translate_updates_available: uppdateringar tillgängliga
+    translate_not_home: Nein
+    translate_available: Verfügbar
+    translate_no_updates: Keine Updates
+    translate_update_available: Update verfügbar
+    translate_updates_available: Updates verfügbar
 
 #################################################
 #                                               #
@@ -427,7 +427,7 @@ footer:
       [[[ return { max: 5, scale: 1.1, glare: true, 'max-glare': 0.07, perspective: 1000, speed: 800, parallax: '10px' }; ]]]
   size: 2vw
   show_icon: false
-  color: '#9da0a2'
+  color: "#9da0a2"
   custom_fields:
     notify: >
       [[[
@@ -464,8 +464,8 @@ footer:
         - top: -0.9vw
         - right: -1vw
         - font-weight: 700
-        - color: '#d6d6d6'
-        - background: '#8b3333'
+        - color: "#d6d6d6"
+        - background: "#8b3333"
         - border-radius: 50%
         - text-align: center
         - text-overflow: unset
@@ -474,7 +474,6 @@ footer:
     action: none
   tap_action:
     haptic: medium
-
 
 #################################################
 #                                               #
@@ -830,7 +829,7 @@ light:
         brightnessWidth: 130px
         brightnessHeight: 360px
         borderRadius: 1.7em
-        sliderColor: '#c7c7c7'
+        sliderColor: "#c7c7c7"
         sliderTrackColor: rgba(25, 25, 25, 0.9)
         displayType: slider
         actionSize: 4.5em
@@ -838,21 +837,21 @@ light:
         actions:
           - action: call-service
             service: light.turn_on
-            color: '#d8d9e1'
+            color: "#d8d9e1"
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
               color_temp: 153
           - action: call-service
             service: light.turn_on
-            color: '#d5b08d'
+            color: "#d5b08d"
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
               color_temp: 326
           - action: call-service
             service: light.turn_on
-            color: '#ce944b'
+            color: "#ce944b"
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
@@ -999,7 +998,7 @@ media:
       icon:
         - width: 70%
         - margin-left: 2%
-        - fill: '#9da0a2'
+        - fill: "#9da0a2"
         - display: >
             [[[
               return variables.media_off || variables.entity_picture === undefined
@@ -1323,9 +1322,9 @@ laundry:
       ]]]
   styles:
     card:
-      - background: '#202a2f30'
+      - background: "#202a2f30"
       - border-radius: 0.7vw
-      - border: '0.2vw solid #292c2e'
+      - border: "0.2vw solid #292c2e"
     state:
       - font-size: 2.7vw
       - font-family: SF Mono, Roboto
@@ -1340,31 +1339,31 @@ laundry:
 
 icon_name:
   size: 1.4em
-  color: '#9da0a2'
+  color: "#9da0a2"
   styles:
     grid:
       - grid-template-areas: '"i n"'
       - grid-column-gap: 0.3em
     card:
-      - color: '#9da0a2'
+      - color: "#9da0a2"
       - border-radius: 0.6em
       - padding: 1em 1.4em 1em 1.2em
       - width: max-content
       - font-size: 1.06em
       - font-weight: 500
       - letter-spacing: 0.015em
-      - background: '#FFFFFF10'
+      - background: "#FFFFFF10"
 
 icon_only:
   show_name: false
-  color: '#9da0a2'
+  color: "#9da0a2"
   styles:
     card:
-      - color: '#9da0a2'
+      - color: "#9da0a2"
       - border-radius: 0.6em
       - width: 4em
       - height: 3.7em
-      - background: '#FFFFFF10'
+      - background: "#FFFFFF10"
 
 #################################################
 #                                               #
@@ -1413,7 +1412,7 @@ icon_play_pause:
         - width: 21%
         - height: 21%
         - position: absolute
-        - fill: '#dedede'
+        - fill: "#dedede"
         - overflow: visible
         - filter: >
             [[[
@@ -2330,3 +2329,63 @@ icon_home:
           </svg>
         `;
       ]]]
+
+icon_youtube:
+  custom_fields:
+    icon: >
+      <svg viewBox="0 0 50 50">
+        <path d="M 12 4 C 12 4 5.7455469 3.9999687 4.1855469 4.4179688 C 3.3245469 4.6479688 2.6479687 5.3255469 2.4179688 6.1855469 C 1.9999687 7.7455469 2 12 2 12 C 2 12 1.9999687 16.254453 2.4179688 17.814453 C 2.6479687 18.675453 3.3255469 19.352031 4.1855469 19.582031 C 5.7455469 20.000031 12 20 12 20 C 12 20 18.254453 20.000031 19.814453 19.582031 C 20.674453 19.352031 21.352031 18.674453 21.582031 17.814453 C 22.000031 16.254453 22 12 22 12 C 22 12 22.000031 7.7455469 21.582031 6.1855469 C 21.352031 5.3255469 20.674453 4.6479688 19.814453 4.4179688 C 18.254453 3.9999687 12 4 12 4 z M 12 6 C 14.882 6 18.490875 6.1336094 19.296875 6.3496094 C 19.465875 6.3946094 19.604391 6.533125 19.650391 6.703125 C 19.891391 7.601125 20 10.342 20 12 C 20 13.658 19.891391 16.397875 19.650391 17.296875 C 19.605391 17.465875 19.466875 17.604391 19.296875 17.650391 C 18.491875 17.866391 14.882 18 12 18 C 9.119 18 5.510125 17.866391 4.703125 17.650391 C 4.534125 17.605391 4.3956094 17.466875 4.3496094 17.296875 C 4.1086094 16.398875 4 13.658 4 12 C 4 10.342 4.1086094 7.6011719 4.3496094 6.7011719 C 4.3946094 6.5331719 4.533125 6.3946094 4.703125 6.3496094 C 5.508125 6.1336094 9.118 6 12 6 z M 10 8.5351562 L 10 15.464844 L 16 12 L 10 8.5351562 z"/>
+      </svg>
+icon_multisensor:
+  custom_fields:
+    icon: >
+      <svg viewBox="0 0 30 30">
+        <path fill="var(--light-color)" d="M15 13V5A3 3 0 0 0 9 5V13A5 5 0 1 0 15 13M12 4A1 1 0 0 1 13 5V8H11V5A1 1 0 0 1 12 4Z"/>
+      </svg>
+#################################################
+#                                               #
+#                     MULTISENSOR             #
+#                                               #
+#################################################
+
+multisensor:
+  template:
+    - base
+  #   - circle
+  variables:
+    circle_input: >
+      [[[ return Math.round(entity.attributes.humidity); ]]]
+    humid: >
+      [[[ return entity.attributes.humidity > 70 ]]]
+  custom_fields:
+    circle: >
+      [[[
+          let input = variables.circle_input,
+            radius = 20.5,
+            circumference = radius * 2 * Math.PI;
+          return `
+            <svg viewBox="0 0 50 50">
+              <style>
+                circle {
+                  transform: rotate(-90deg);
+                  transform-origin: 50% 50%;
+                  stroke-dasharray: ${circumference};
+                  stroke-dashoffset: ${circumference - input / 100 * circumference};
+                }
+                tspan {
+                  font-size: 10px;
+                }
+              </style>
+              <circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" />
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}<tspan font-size="10">%</tspan></text>
+            </svg>
+          `;
+      ]]]
+  styles:
+    card:
+      - background-color: >
+          [[[
+            return variables.humid ?
+              'rgba(65, 105, 225, 0.2)' :
+              'rgba(115, 115, 115, 0.2)';
+          ]]]
