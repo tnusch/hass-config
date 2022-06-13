@@ -1,5 +1,3 @@
-# !toggle word-wrap
-
 #################################################
 #                                               #
 #                   SETTINGS                    #
@@ -32,7 +30,7 @@ base:
     - extra_styles
   variables:
     state_on: >
-      [[[ return ['on', 'home', 'cool', 'fan_only', 'playing'].indexOf(entity === undefined || entity.state) !== -1; ]]]
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'playing', 'unlocked'].indexOf(entity === undefined || entity.state) !== -1; ]]]
     state: >
       [[[ return entity === undefined || entity.state; ]]]
     entity_id: >
@@ -132,6 +130,12 @@ base:
               ? 'rgba(255, 255, 255, 0.8)'
               : 'rgba(115, 115, 115, 0.2)';
           ]]]
+
+#################################################
+#                                               #
+#                 EXTRA STYLES                  #
+#                                               #
+#################################################
 
 extra_styles:
   extra_styles: >
@@ -344,7 +348,7 @@ sidebar:
       display: flex !important;
     }
     #name {
-      padding: 0vw 2.5vw 0 var(--custom-layout-card-padding);
+      padding: 1.8vw 2.5vw 0 var(--custom-layout-card-padding);
       white-space: normal;
       text-align: left;
     }
@@ -423,7 +427,7 @@ footer:
       [[[ return { max: 5, scale: 1.1, glare: true, 'max-glare': 0.07, perspective: 1000, speed: 800, parallax: '10px' }; ]]]
   size: 2vw
   show_icon: false
-  color: "#9da0a2"
+  color: '#9da0a2'
   custom_fields:
     notify: >
       [[[
@@ -460,8 +464,8 @@ footer:
         - top: -0.9vw
         - right: -1vw
         - font-weight: 700
-        - color: "#d6d6d6"
-        - background: "#8b3333"
+        - color: '#d6d6d6'
+        - background: '#8b3333'
         - border-radius: 50%
         - text-align: center
         - text-overflow: unset
@@ -470,6 +474,7 @@ footer:
     action: none
   tap_action:
     haptic: medium
+
 
 #################################################
 #                                               #
@@ -568,7 +573,7 @@ tilt:
             if (elt && card && !ignore.match(/iPhone/i) && !ignore.match(/Android/i)) {
               VanillaTilt.init(card, variables.tilt_options);
             }
-          }, 0);
+          }, 50);
         }
         catch (e) {
         }
@@ -748,7 +753,7 @@ updater_other:
           ? variables.translate_no_updates
           : `${count} ${count == 1 ? variables.translate_update_available : variables.translate_updates_available} ${String.fromCodePoint('0x1f389')}`;
         return `
-          <ha-icon icon="mdi:update"></ha-icon> <span class="title">Andere</span><br>
+          <ha-icon icon="mdi:update"></ha-icon> <span class="title">Övrigt</span><br>
           <p class="subtitle">${subtitle}</p>
           <ul>${output}</ul>
         `;
@@ -815,7 +820,7 @@ light:
         brightnessWidth: 130px
         brightnessHeight: 360px
         borderRadius: 1.7em
-        sliderColor: "#c7c7c7"
+        sliderColor: '#c7c7c7'
         sliderTrackColor: rgba(25, 25, 25, 0.9)
         displayType: slider
         actionSize: 4.5em
@@ -823,21 +828,21 @@ light:
         actions:
           - action: call-service
             service: light.turn_on
-            color: "#d8d9e1"
+            color: '#d8d9e1'
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
               color_temp: 153
           - action: call-service
             service: light.turn_on
-            color: "#d5b08d"
+            color: '#d5b08d'
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
               color_temp: 326
           - action: call-service
             service: light.turn_on
-            color: "#ce944b"
+            color: '#ce944b'
             service_data:
               entity_id: >
                 [[[ return variables.entity_id; ]]]
@@ -984,7 +989,7 @@ media:
       icon:
         - width: 70%
         - margin-left: 2%
-        - fill: "#9da0a2"
+        - fill: '#9da0a2'
         - display: >
             [[[
               return variables.media_off || variables.entity_picture === undefined
@@ -1308,9 +1313,9 @@ laundry:
       ]]]
   styles:
     card:
-      - background: "#202a2f30"
+      - background: '#202a2f30'
       - border-radius: 0.7vw
-      - border: "0.2vw solid #292c2e"
+      - border: '0.2vw solid #292c2e'
     state:
       - font-size: 2.7vw
       - font-family: SF Mono, Roboto
@@ -1325,31 +1330,31 @@ laundry:
 
 icon_name:
   size: 1.4em
-  color: "#9da0a2"
+  color: '#9da0a2'
   styles:
     grid:
       - grid-template-areas: '"i n"'
       - grid-column-gap: 0.3em
     card:
-      - color: "#9da0a2"
+      - color: '#9da0a2'
       - border-radius: 0.6em
       - padding: 1em 1.4em 1em 1.2em
       - width: max-content
       - font-size: 1.06em
       - font-weight: 500
       - letter-spacing: 0.015em
-      - background: "#FFFFFF10"
+      - background: '#FFFFFF10'
 
 icon_only:
   show_name: false
-  color: "#9da0a2"
+  color: '#9da0a2'
   styles:
     card:
-      - color: "#9da0a2"
+      - color: '#9da0a2'
       - border-radius: 0.6em
       - width: 4em
       - height: 3.7em
-      - background: "#FFFFFF10"
+      - background: '#FFFFFF10'
 
 #################################################
 #                                               #
@@ -1398,7 +1403,7 @@ icon_play_pause:
         - width: 21%
         - height: 21%
         - position: absolute
-        - fill: "#dedede"
+        - fill: '#dedede'
         - overflow: visible
         - filter: >
             [[[
@@ -1641,10 +1646,10 @@ icon_ps5:
               <style>
               @keyframes on {
                 50% {
-                  transform: translateY(0);
+                  transform: translateY(-45%);
                 }
                 100% {
-                  transform: translateY(-45%);
+                  transform: translateY(0);
                 }
               }
               .on {
@@ -1670,20 +1675,11 @@ icon_ps5:
 
         return variables.state_on && variables.timeout > 2000 ? `
           <svg viewBox="0 0 50 50">
-          <g style="clip-path: url(#mask);">
-            <g style="transform: translateY(-45%);">
-              <path fill="#00aa9e" d="M49.2 38.9l-75.6-25.1v7.4l75.6 25.2z"/>
-              <path fill="#f3c202" d="M49.2 46.4l-75.6-25.2v7.5l75.6 25.1z"/>
-              <path fill="#326db3" d="M49.2 53.8l-75.6-25.1V51l75.6 25.1zm0-22.3L-26.4 6.4v7.4l75.6 25.1z"/>
-            </g>
-          </g>
-          <defs>
-            <clipPath id="mask">
-              <path d="M47.5 33.2c-.5-2.2-3.9-3.5-9.1-3.9-3.8-.3-7.5.6-11.1 1.9l-.6.2v-5.7l-5.7.8-4.6 1.6L6 31.9h-.1c-1.9.7-3.8 2.2-3.7 4.2.1 2.1 4.7 2.6 8.2 3.2 3.3.6 6.2.2 8.9-.7l7.3 4.8L33 41l10.7-4h.1c2.8-1 4-2.5 3.7-3.8zm-31.3 2l-3.6 1.3c-2.2.8-4.1-1.1-2.1-1.9l1.7-.6 7.2-2.7v2.8l-3.2 1.1zm22.5-1.1l-1.9.7-10.2 3.7V36l6.5-2.4 3.8-1.3c4-.9 5.6.5 1.8 1.8z"/>
-            </clipPath>
-          </defs>
-          <path fill="#de0029" d="M26.7 14.6v28.7l-7.3-2.5V7.1l9.3 2.6c6 1.7 9.6 5 9.6 10.7-.1 6.7-3 9.4-8.7 7.6V14.9c-.1-1.6-2.9-1.7-2.9-.3h0z"/>
-        </svg>
+            <path d="M33.1 33.6L26.7 36v-4.5l6.4 2.1h0zM19.4 29l-2.9-1h-.1L6 31.9h-.1-.1l6.3 2.1h.1l7.2-2.7V29zm0 5.1l-3.2 1.1-.3.1 3.5 1.2v-2.4zm17.4.7h0l-10.1 3.7v.4L33 41l10.6-4-6.8-2.2z" fill="#00aa9e" />
+            <path d="M19.4 38.5l-.1.1c-2.7.9-5.6 1.3-8.9.7-3.5-.6-8.1-1.1-8.2-3.2-.1-2 1.7-3.4 3.6-4.2l6.3 2.1-1.6.6c-2 .8-.1 2.7 2.1 1.9l3.3-1.2 3.5 1.2v2zm7.3 4.8L33 41l-6.3-2.1v4.4" fill="#f3c202" />
+            <path d="M19.4 29l-2.9-1 2.9-1v2zm28.1 4.2c-.5-2.2-3.9-3.5-9.1-3.9-3.8-.3-7.5.6-11.1 1.9l-.6.2h0l6.5 2.1 3.7-1.3c4-.9 5.6.5 1.8 1.8l-1.9.7 6.8 2.2h.1.1c2.8-.9 4-2.4 3.7-3.7z" fill="#326db3" />
+            <path d="M26.7 14.6v28.7l-7.3-2.5V7.1l9.3 2.6c6 1.7 9.6 5 9.6 10.7-.1 6.7-3 9.4-8.7 7.6V14.9c-.1-1.6-2.9-1.7-2.9-.3z" fill="#de0029" />
+          </svg>
         ` : `
           <svg viewBox="0 0 50 50">
             <path fill="#9da0a2" d="M43.8 37h-.1l-10.6 4-4.2 1.6v-4.9l8-2.9 1.9-.7c3.8-1.3 2.2-2.7-1.8-1.9l-3.8 1.3-4.3 1.6v-4.5c3.1-1 6.3-1.6 9.5-1.4 5.3.4 8.7 1.6 9.1 3.9.3 1.4-.9 2.9-3.7 3.9zm-26.7-2.1l-.9.3-3.6 1.3c-2.2.8-4.1-1.1-2.1-1.9l1.7-.6 5-1.9v-4.2l-.6.2L6 31.9h-.1c-1.9.7-3.8 2.2-3.7 4.2.1 2.1 4.7 2.6 8.2 3.2 2.4.4 4.6.3 6.7-.1v-4.3zm12.4-20V28c5.7 1.7 8.7-.9 8.7-7.6.1-5.7-3.6-9-9.6-10.7l-9.3-2.6v33.8l7.2 2.5.1.1V14.6c.1-1.4 2.9-1.3 2.9.3z"/>
