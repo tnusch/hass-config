@@ -513,13 +513,13 @@ template:
         attributes:
           friendly_name: Dauer
 
-      - unique_id: imac_macintosh_hd
-        state: >
-          {{ 100 - states('sensor.mattias_imac_storage') | float }}
-        attributes:
-          friendly_name: Macintosh HD
-          icon: custom:imac-ssd
-          unit_of_measurement: "%"
+      # - unique_id: imac_macintosh_hd
+      #   state: >
+      #     {{ 100 - states('sensor.mattias_imac_storage') | float }}
+      #   attributes:
+      #     friendly_name: Macintosh HD
+      #     icon: custom:imac-ssd
+      #     unit_of_measurement: "%"
 
       - unique_id: fullykiosk_last_app_start
         state: >
