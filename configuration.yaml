@@ -82,15 +82,11 @@ logger:
     homeassistant.components.yamaha: critical
     custom_components.my_integration: critical
 
-google:
-  client_id: !secret google_client_id
-  client_secret: !secret google_client_secret
-
 waste_collection_schedule:
   sources:
     name: ics
     args:
-      url: "https://www.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalte/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=707245001&AboID=23908"
+      url: "https://waste.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalteBlank/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=707245001&AboID=23908"
     customize:
       - type: Mobile Schadstoffsammlung
         alias: Schadstoffe
