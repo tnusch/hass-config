@@ -163,6 +163,7 @@ lovelace:
         type: module,
       },
       { url: "/hacsfiles/rmv-card/rmv-card.js?v=0", type: module },
+      { url: "/hacsfiles/lovelace-fan-xiaomi/fan-xiaomi.js", type: module },
     ]
 
 recorder:
@@ -225,3 +226,9 @@ person:
     id: clarissa
     device_trackers:
       - device_tracker.handy_clarissa
+
+fan:
+  - platform: xiaomi_miio_fan
+    name: Xiaomi Smart Fan
+    host: !secret xiaomi_fan_host
+    token: !secret xiaomi_fan_token
