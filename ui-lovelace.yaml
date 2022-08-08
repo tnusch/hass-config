@@ -1,4 +1,5 @@
-button_card_templates: !include button_card_templates.yaml
+button_card_templates:
+  !include_dir_merge_named button_card_templates
 
 views:
   - type: custom:grid-layout
@@ -80,7 +81,7 @@ views:
             card:
               type: custom:button-card
               entity: timer.laundry
-              hold_action:
+              double_tap_action:
                 action: call-service
                 service: input_boolean.turn_off
                 service_data:
@@ -100,22 +101,57 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
+<<<<<<< HEAD
             entity: light.wohnzimmer
             name: Wohnen
-            template:
-              - light
-              - icon_shade
-
-          - type: custom:button-card
-            entity: light.esszimmer
-            name: Essen
+=======
+            entity: light.vardagsrum_group
+            name: Belysning
             template:
               - light
               - icon_hue
 
           - type: custom:button-card
+            entity: light.vardagsrum_horna
+            name: Hörnlampa
+>>>>>>> upstream/master
+            template:
+              - light
+              - icon_shade
+
+          - type: custom:button-card
+<<<<<<< HEAD
+            entity: light.esszimmer
+            name: Essen
+=======
+            entity: media_player.sony_bravia_tv
+            name: Tv
+            state_display: >
+              [[[
+                if (variables.state === 'playing') {
+                    return 'På';
+                }
+                if (variables.state === true) {
+                    return variables.translate_unknown;
+                }
+              ]]]
+            double_tap_action:
+              !include popup/vardagsrum_tv.yaml
+>>>>>>> upstream/master
+            template:
+              - light
+              - icon_hue
+
+          - type: custom:button-card
+<<<<<<< HEAD
             entity: sensor.wohnzimmer
             name: Wohnen
+=======
+            entity: switch.deltaco_sh_p01_socket
+            name: Balkong
+            double_tap_action:
+              !include popup/vardagsrum_balkong.yaml
+>>>>>>> upstream/master
             template:
               - multisensor
               - icon_multisensor
@@ -162,23 +198,33 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
+<<<<<<< HEAD
             entity: sensor.badezimmer
             name: Bad
+=======
+            entity: light.studio_dator
+            name: Datorlampa
+>>>>>>> upstream/master
             template:
               - multisensor
               - icon_multisensor
 
           - type: custom:button-card
-            entity: light.group_taklampor
+            entity: light.studio_group
             name: Taklampor
             template:
               - light
               - icon_spot
 
           - type: custom:button-card
-            entity: switch.computer_imac
+            entity: switch.imac
             name: Dator
+<<<<<<< HEAD
             hold_action: !include popup/studio_dator.yaml
+=======
+            double_tap_action:
+              !include popup/studio_dator.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_imac
@@ -187,19 +233,24 @@ views:
             variables:
               lock: >
                 [[[
-                  let lock = states['lock.dator'];
-                  return lock === undefined || lock.state;
+                  let lock = states['input_boolean.imac_lock'];
+                  return !lock || lock.state;
                 ]]]
               trigger: >
                 [[[
                   let trigger = states['script.home_leave'];
-                  return trigger === undefined || trigger;
+                  return !trigger || trigger;
                 ]]]
 
           - type: custom:button-card
             entity: switch.gosund_monitors_switch
             name: Monitorer
+<<<<<<< HEAD
             hold_action: !include popup/studio_monitorer.yaml
+=======
+            double_tap_action:
+              !include popup/studio_monitorer.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_monitors
@@ -208,9 +259,10 @@ views:
             variables:
               circle_input: >
                 [[[
-                  let sensor = states['sensor.monitors_volume'];
-                  return sensor === undefined || sensor.state;
+                  let volume = states['sensor.monitors_volume'];
+                  if (volume) return parseInt(volume.state);
                 ]]]
+              circle_input_unit: '%'
 
       #################################################
       #                                               #
@@ -225,7 +277,7 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
-            entity: light.group_sanglampor
+            entity: light.sovrum_group
             name: Sänglampor
             template:
               - light
@@ -234,34 +286,50 @@ views:
           - type: custom:button-card
             entity: climate.ac
             name: Klimat
+<<<<<<< HEAD
             hold_action: !include popup/sovrum_klimat.yaml
+=======
+            double_tap_action:
+              !include popup/sovrum_klimat.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_climate
-              - climate
+              - circle
             variables:
               circle_input: >
                 [[[
                   if (entity) {
-                    return entity.state === 'cool' ?
-                      entity.attributes.temperature :
-                      entity.attributes.current_temperature;
+                      return entity.state === 'cool'
+                          ? Math.round(entity.attributes.temperature).toString()
+                          : Math.round(entity.attributes.current_temperature).toString();
                   }
                 ]]]
+              circle_input_unit: '°C'
 
           - type: custom:button-card
-            entity: switch.playstation_5
+            entity: switch.ps5_635_power
             name: Playstation
+<<<<<<< HEAD
             hold_action: !include popup/vardagsrum_playstation.yaml
+=======
+            double_tap_action:
+              !include popup/sovrum_playstation.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_ps5
               - loader
 
           - type: custom:button-card
-            entity: media_player.samsung_tv
+            entity: media_player.samsung
             name: "Tv\u00B2"
+<<<<<<< HEAD
             hold_action: !include popup/sovrum_tv2.yaml
+=======
+            double_tap_action:
+              !include popup/sovrum_tv2.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_tv
@@ -406,7 +474,7 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
-            entity: light.group_badrum
+            entity: light.badrum_group
             name: Badrum
             template:
               - light
@@ -415,21 +483,26 @@ views:
           - type: custom:button-card
             entity: switch.gosund_fan_switch
             name: "Fläkt\u00B2"
+<<<<<<< HEAD
             hold_action: !include popup/studio_flakt.yaml
+=======
+            double_tap_action:
+              !include popup/studio_flakt.yaml
+>>>>>>> upstream/master
             template:
               - base
               - icon_fan2
               - loader
 
           - type: custom:button-card
-            entity: light.garderob
+            entity: light.garderob_lampa
             name: Garderob
             template:
               - light
               - icon_closet
 
           - type: custom:button-card
-            entity: light.group_hall
+            entity: light.hall_group
             name: Hall
             template:
               - light
@@ -451,16 +524,28 @@ views:
             entity: person.tim
             name: Tim
             triggers_update:
+<<<<<<< HEAD
               - sensor.tim_last_changed
             tap_action: !include popup/home_tim.yaml
             variables:
               retain: sensor.tim_last_changed
             template: person
+=======
+              - sensor.matte_last_changed
+            double_tap_action:
+              !include popup/hemma_mattias.yaml
+            variables:
+              retain: sensor.matte_last_changed
+            template:
+              - person
+              - circle
+>>>>>>> upstream/master
 
           - type: custom:button-card
             entity: person.clarissa
             name: Clarissa
             triggers_update:
+<<<<<<< HEAD
               - sensor.clarissa_last_changed
             tap_action: !include popup/hemma_sanja.yaml
             variables:
@@ -472,15 +557,33 @@ views:
             name: Alles schließen
             hold_action:
               action: none
+=======
+              - sensor.sanja_last_changed
+            double_tap_action:
+              !include popup/hemma_sanja.yaml
+            variables:
+              retain: sensor.sanja_last_changed
+            template:
+              - person
+              - circle
+
+          - type: custom:button-card
+            entity: script.home_leave
+            name: Stäng allt
+>>>>>>> upstream/master
             template:
               - base
               - icon_away
 
           - type: custom:button-card
             entity: script.home_arrive
+<<<<<<< HEAD
             name: Zu Hause
             hold_action:
               action: none
+=======
+            name: Hemma
+>>>>>>> upstream/master
             template:
               - base
               - icon_home
@@ -497,6 +600,7 @@ views:
         cards:
           - type: custom:button-card
             name: >
+<<<<<<< HEAD
               <ha-icon icon="mdi:nas"></ha-icon> Info
             tap_action: !include popup/footer/nas.yaml
             variables:
@@ -513,11 +617,32 @@ views:
                         security.state === 'on' ||
                         parseFloat(disk_use.state) >= 85;
                   }
+=======
+              <ha-icon icon="mdi:nas"></ha-icon> NAS
+            tap_action:
+              !include popup/footer_nas.yaml
+            triggers_update:
+              - binary_sensor.nas_update_available
+              - sensor.nas_volume_1_status
+              - binary_sensor.nas_security_status
+              - sensor.disk_use_percent
+            variables:
+              notify: >
+                [[[
+                  let id = this._config.triggers_update;
+                  if (id.every(e => states[e]))
+                      return states[id[0]].state === 'on'
+                          ? 1
+                          : states[id[1]].state === 'background_scrubbing' ||
+                            states[id[2]].state === 'on' ||
+                            parseFloat(states[id[3]].state) >= 85;
+>>>>>>> upstream/master
                 ]]]
             template: footer
 
           - type: custom:button-card
             name: >
+<<<<<<< HEAD
               <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Updates
             tap_action: !include popup/footer/updater.yaml
             variables:
@@ -526,6 +651,28 @@ views:
                   let all_updates = states['sensor.all_updates'];
                   if (Number.isInteger(parseInt(all_updates.state))) {
                     return parseInt(all_updates.state);
+=======
+              <ha-icon icon="mdi:arrow-up-bold-circle-outline"></ha-icon> Uppdatera
+            tap_action:
+              !include popup/footer_updates.yaml
+            triggers_update:
+              - sensor.hacs
+              - sensor.docker_hub_beta
+              - sensor.docker_hub
+            variables:
+              notify: >
+                [[[
+                  let id = this._config.triggers_update;
+                  if (id.every(e => states[e])) {
+                      let hacs = parseInt(states[id[0]].state),
+                          installed = hass.config.version,
+                          latest = installed.includes('b')
+                              ? states[id[1]].state
+                              : states[id[2]].state;
+
+                      if (latest.includes('.') && Number.isInteger(hacs))
+                          return hacs + (installed !== latest ? 1 : 0);
+>>>>>>> upstream/master
                   }
                   return 0;
                 ]]]
@@ -533,6 +680,7 @@ views:
 
           - type: custom:button-card
             name: >
+<<<<<<< HEAD
               <ha-icon icon="mdi:robot-vacuum-variant"></ha-icon> Robi
             tap_action: !include popup/footer/vacuum.yaml
             variables:
@@ -556,16 +704,42 @@ views:
             name: >
               <ha-icon icon="mdi:tablet"></ha-icon> Tablet
             tap_action: !include popup/footer/tablet.yaml
+=======
+              <ha-icon icon="mdi:robot-vacuum-variant"></ha-icon> Städa
+            tap_action:
+              !include popup/footer_vacuum.yaml
+            triggers_update:
+              - sensor.date
             variables:
               notify: >
                 [[[
-                  let plugged_in = states['binary_sensor.galaxy_tab_a_plugged_in'];
-                  if (plugged_in) {
-                    return plugged_in.state === 'off';
-                  }
+                  let id = states['sensor.morty_last_clean_end'];
+                  if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
                 ]]]
             template: footer
 
+          - type: custom:button-card
+            name: >
+              <ha-icon icon="mdi:chart-line-variant"></ha-icon> Historik
+            tap_action:
+              !include popup/footer_history.yaml
+            template: footer
+
+          - type: custom:button-card
+            name: >
+              <ha-icon icon="mdi:tablet"></ha-icon> Platta
+            tap_action:
+              !include popup/footer_tablet.yaml
+>>>>>>> upstream/master
+            variables:
+              notify: >
+                [[[
+                  let id = states['binary_sensor.galaxy_tab_a_plugged_in'];
+                  if (id) return id.state === 'off';
+                ]]]
+            template: footer
+
+<<<<<<< HEAD
           # - type: custom:button-card
           #   name: >
           #     <ha-icon icon="mdi:router-wireless"></ha-icon> Router
@@ -596,3 +770,36 @@ views:
           #         }
           #       ]]]
           #   template: footer
+=======
+          - type: custom:button-card
+            name: >
+              <ha-icon icon="mdi:router-wireless"></ha-icon> Router
+            tap_action:
+              !include popup/footer_router.yaml
+            triggers_update:
+              - binary_sensor.template_udm_upgradable
+              - binary_sensor.template_udm_internet
+            variables:
+              notify: >
+                [[[
+                  let id = this._config.triggers_update;
+                  if (id.every(e => states[e]))
+                      return states[id[0]].state === 'on'
+                          ? 1
+                          : states[id[1]].state === 'off';
+                ]]]
+            template: footer
+
+          - type: custom:button-card
+            name: >
+              <ha-icon icon="mdi:raspberry-pi"></ha-icon> RPi
+            tap_action:
+              !include popup/footer_rpi.yaml
+            variables:
+              notify: >
+                [[[
+                  let id = states['binary_sensor.rpi_ping'];
+                  if (id) return id.state === 'off';
+                ]]]
+            template: footer
+>>>>>>> upstream/master

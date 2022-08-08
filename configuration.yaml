@@ -116,13 +116,26 @@ homeassistant:
   elevation: !secret homeassistant_elevation
   unit_system: metric
   temperature_unit: C
+<<<<<<< HEAD
   time_zone: Europe/Berlin
   currency: EUR
+=======
+  time_zone: Europe/Stockholm
+  currency: SEK
+  packages: !include_dir_named packages
+  customize_domain:
+    automation:
+      initial_state: true
+>>>>>>> upstream/master
   allowlist_external_dirs:
     - /config
   legacy_templates: false
 
+frontend: !include themes.yaml
+template: !include sidebar.yaml
+
 lovelace:
+<<<<<<< HEAD
   mode: yaml #use ui-lovelace.yaml
   resources: #hacs
     [
@@ -232,3 +245,42 @@ fan:
     name: Xiaomi Smart Fan
     host: !secret xiaomi_fan_host
     token: !secret xiaomi_fan_token
+=======
+  mode: yaml
+  resources:
+    [
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
+      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
+      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
+      { url: /hacsfiles/custom-icons/custom-icons.js,                               type: module },
+      { url: /hacsfiles/kiosk-mode/kiosk-mode.js,                                   type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
+      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js,                  type: module },
+      { url: /hacsfiles/lovelace-mushroom/mushroom.js,                              type: module },
+      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
+      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
+      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
+
+      { url: '/local/marked.min.js?v=4.0.18',                                       type: module },
+      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
+      { url: '/local/fonts.css?v=2.1',                                              type: css }
+    ]
+
+recorder:
+  db_url: !secret recorder_db_url
+  exclude:
+    entity_globs:
+      - sensor.browser_*
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.websocket_api: fatal
+    custom_components.monitor_docker.helpers: fatal
+
+sensor:
+  - platform: time_date
+    display_options:
+      - time
+      - date
+>>>>>>> upstream/master
