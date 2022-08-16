@@ -1,0 +1,183 @@
+template:
+  - sensor:
+      - unique_id: weather
+        state: template
+        attributes:
+          weather: |
+            {%- set temperature = states('sensor.temperature_heidelberg') %}
+            {%- set weather = states('weather.heidelberg') %}
+            {%- set precip = states('sensor.precipitation_probability_heidelberg') | round %}
+            {% if not is_state('sensor.temperature_heidelberg', 'unknown') %}
+              {%- if weather == 'sunny' -%}
+                {{'\u2600\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'fog' -%}
+                {{'\uD83C\uDF2B\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'lightning' -%}
+                {{'\uD83C\uDF29\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'lightning-rainy' -%}
+                {{'\u26c8\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'partlycloudy' -%}
+                {{'\u26c5\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'pouring' -%}
+                {{'\uD83C\uDF27\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'rainy' -%}
+                {{'\uD83C\uDF27\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'snowy' -%}
+                {{'\uD83C\uDF28\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'snowy-rainy' -%}
+                {{'\uD83C\uDF28\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'windy' -%}
+                {{'\uD83C\uDF2C\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'windy-variant' -%}
+                {{'\uD83C\uDF2C\ufe0f'}} {{ temperature }}°
+              {%- elif weather == 'exceptional' -%}
+                {{'\u2b55\ufe0f'}} {{ temperature }}°
+              {%- endif %}
+            {%- else %}
+              Wetterinformationen können nicht geladen werden
+            {%- endif %}
+      - unique_id: seventeentrack_packages
+        state: >
+          {%- set in_transit = states('sensor.seventeentrack_packages_in_transit')|int %}
+          {%- set ready_to_be_picked_up = states('sensor.seventeentrack_packages_ready_to_be_picked_up') |int%}
+          {%- set delivered = states('sensor.seventeentrack_packages_delivered') |int%}
+          {%- set returned = states('sensor.seventeentrack_packages_returned') |int%}
+          {%- set expired = states('sensor.seventeentrack_packages_expired') |int%}
+          {%- set not_found = states('sensor.seventeentrack_packages_not_found') |int%}
+          {%- set undelivered = states('sensor.seventeentrack_packages_undelivered')|int%}
+          {{in_transit + ready_to_be_picked_up + delivered + returned + expired + not_found + undelivered}}
+        attributes:
+          seventeentrack_packages: |
+            {%- set in_transit = states('sensor.seventeentrack_packages_in_transit') %}
+            {%- set ready_to_be_picked_up = states('sensor.seventeentrack_packages_ready_to_be_picked_up') %}
+            {%- set delivered = states('sensor.seventeentrack_packages_delivered') %}
+            {%- set returned = states('sensor.seventeentrack_packages_returned') %}
+            {%- set expired = states('sensor.seventeentrack_packages_expired') %}
+            {%- set not_found = states('sensor.seventeentrack_packages_not_found') %}
+            {%- set undelivered = states('sensor.seventeentrack_packages_undelivered') %}
+            <b>
+            {%- if (in_transit | float == 1) %}
+            {{in_transit}} Paket unterwegs
+            {%- endif %}
+            {%- if (in_transit | float > 1) %}
+            {{in_transit}} Pakete unterwegs
+            {%- endif %}
+            {%- if (ready_to_be_picked_up | float == 1) %}
+            {{ready_to_be_picked_up}} Paket in Zustellung
+            {%- endif %}
+            {%- if (ready_to_be_picked_up | float > 1) %}
+            {{ready_to_be_picked_up}} Pakete in Zustellung
+            {%- endif %}
+            {%- if (delivered | float == 1) %}
+            {{delivered}} Paket zugestellt
+            {%- endif %}
+            {%- if (delivered | float > 1) %}
+            {{delivered}} Pakete zugestellt
+            {%- endif %}
+            {%- if (returned | float == 1) %}
+            {{returned}} Paket zurückgesendet
+            {%- endif %}
+            {%- if (returned | float > 1) %}
+            {{returned}} Pakete zurückgesendet
+            {%- endif %}
+            {%- if (expired | float == 1) %}
+            {{expired}} Paket abgelaufen
+            {%- endif %}
+            {%- if (expired | float > 1) %}
+            {{expired}} Pakete abgelaufen
+            {%- endif %}
+            {%- if (undelivered | float == 1) %}
+            {{undelivered}} Paket nicht zugestellt
+            {%- endif %}
+            {%- if (undelivered | float > 1) %}
+            {{undelivered}} Pakete nicht zugestellt
+            {%- endif %}
+            </b>
+
+      - unique_id: wohnzimmer
+        name: Wohnzimmer
+        icon: mdi:leak
+        state: >
+          {{ states('sensor.wohnzimmer_temperature') }}
+        attributes:
+          battery: >
+            {{ states('sensor.wohnzimmer_battery_level') }}
+          humidity: >
+            {{ states('sensor.wohnzimmer_humidity') }}
+          pressure: >
+            {{ states('sensor.wohnzimmer_pressure') }}
+          temperature: >
+            {{ states('sensor.wohnzimmer_temperature') }}
+          unit_of_measurement: "°C"
+
+      - unique_id: badezimmer
+        name: Badezimmer
+        icon: mdi:leak
+        state: >
+          {{ states('sensor.bad_temperature') }}
+        attributes:
+          battery: >
+            {{ states('sensor.bad_battery_level') }}
+          humidity: >
+            {{ states('sensor.bad_humidity') }}
+          pressure: >
+            {{ states('sensor.bad_pressure') }}
+          temperature: >
+            {{ states('sensor.bad_temperature') }}
+          unit_of_measurement: "°C"
+      - unique_id: last_backup
+        name: Last Backup
+        icon: mdi:cloud-upload
+        device_class: timestamp
+        state: >
+          {{ state_attr('sensor.backup_state', 'last_backup') }}
+      - unique_id: all_updates
+        name: All updates
+        icon: mdi:update
+        state: >
+          {% set hacs = states('sensor.hacs') | int %}
+          {% set updaters = states.update 
+            | selectattr('state','eq','on')
+            | map(attribute = 'entity_id') | list | length | int  %}
+          {{ hacs + updaters }}
+      - unique_id: bad_schoenborn_departures
+        # name: Bad Schönborn-Kronau
+        # icon: mdi:train
+        state: template
+        attributes:
+          departures: |
+            {% set now = as_timestamp(now()) %}
+            {% set dep_0_line = state_attr('sensor.bad_schoenborn_kronau', 'line') %}
+            {% set dep_0_dir = state_attr('sensor.bad_schoenborn_kronau', 'direction') %}
+            {% set dep_0_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'departure_time')) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_0_time = state_attr('sensor.bad_schoenborn_kronau', 'departure_time')|string %}
+            {% set dep_1_line = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].line %}
+            {% set dep_1_dir = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].direction %}
+            {% set dep_1_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].departure_time) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_1_time = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[0].departure_time|string %}
+            {% set dep_2_line = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].line %}
+            {% set dep_2_dir = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].direction %}
+            {% set dep_2_min = ((as_timestamp(state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].departure_time) - now) / 60)|round(0, "ceil",default)|int %}
+            {% set dep_2_time = state_attr('sensor.bad_schoenborn_kronau', 'next_departures')[1].departure_time|string %}
+            {{ dep_0_line ~ ' ' ~ dep_0_dir ~ ' - ' ~ dep_0_time[11:16]}}<br>
+            {{ dep_1_line ~ ' ' ~ dep_1_dir ~ ' - ' ~ dep_1_time[11:16]}}<br>
+            {{ dep_2_line ~ ' ' ~ dep_2_dir ~ ' - ' ~ dep_2_time[11:16]}}
+
+      - unique_id: bad_schoenborn_next_waste
+        name: Nächster Müll
+        icon: mdi:delete
+        state: template
+        attributes:
+          next_waste: |
+            {% set midnight = today_at() %}
+            {% set event = state_attr('calendar.ics_2', 'start_time') | as_datetime | as_local %}
+            {% set delta = event - midnight %}
+            {% if delta.days == 0 %}
+              <b>{{state_attr('calendar.ics_2', 'message')}} heute!</b>
+            {% elif delta.days == 1 %}
+              <b>{{state_attr('calendar.ics_2', 'message')}} morgen!</b>
+            {% elif delta.days == 2 %}
+              {{state_attr('calendar.ics_2', 'message')}} übermorgen
+            {% else %}
+            {{state_attr('calendar.ics_2', 'message')}} in {{ delta.days }} Tagen
+            {% endif %}

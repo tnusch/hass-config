@@ -10,47 +10,6 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-camera:
-  - platform: xiaomi_cloud_map_extractor
-    host: !secret xiaomi_host
-    token: !secret xiaomi_token
-    username: !secret xiaomi_username
-    password: !secret xiaomi_password
-    country: "de"
-    colors:
-      color_robo: [224, 224, 224]
-      color_charger: [27, 117, 27]
-      color_path: [30, 80, 113]
-      color_goto_path: [30, 80, 113]
-      color_map_wall_v2: [30, 30, 30]
-      color_obstacle: [30, 30, 30]
-      color_virtual_walls: [255, 0, 0, 60]
-      color_no_go_zones_outline: [255, 0, 0, 60]
-      color_no_go_zones: [255, 0, 0, 28]
-      color_scan: [0, 0, 0, 0]
-      color_map_inside: [0, 0, 0, 0]
-      color_map_outside: [0, 0, 0, 0]
-      color_grey_wall: [0, 0, 0, 0]
-      color_map_wall: [0, 0, 0, 0]
-    room_colors:
-      1: [42, 46, 48]
-      2: [42, 46, 48]
-      3: [42, 46, 48]
-      4: [42, 46, 48]
-      5: [42, 46, 48]
-    draw: ["all"]
-    map_transformation:
-      scale: 2
-      trim:
-        top: 16
-        right: 22
-        bottom: 25
-        left: 21
-    sizes:
-      charger_radius: 10
-      vacuum_radius: 10
-    attributes:
-      - calibration_points
 
 device_tracker:
   - platform: ping
@@ -59,7 +18,6 @@ device_tracker:
       handy_clarissa: !secret handy_clarissa
       handy_tim: !secret handy_tim
       uhr_tim: !secret uhr_tim
-      pc_tim: !secret pc_tim
 
 wake_on_lan:
 
@@ -97,12 +55,6 @@ waste_collection_schedule:
       - type: Wertstoffbehaelter
         alias: Wertstoff
 
-bring_shopping_list:
-  lists:
-    - id: !secret bring_list_id
-      name: Zuhause
-      locale: de-DE
-
 media_player:
   - platform: onkyo
     host: !secret onkyo_receiver
@@ -110,23 +62,17 @@ media_player:
 
 homeassistant:
   name: Startseite
-  packages: !include_dir_named include #theme
   latitude: !secret homeassistant_latitude
   longitude: !secret homeassistant_longitude
   elevation: !secret homeassistant_elevation
   unit_system: metric
   temperature_unit: C
-<<<<<<< HEAD
   time_zone: Europe/Berlin
   currency: EUR
-=======
-  time_zone: Europe/Stockholm
-  currency: SEK
   packages: !include_dir_named packages
   customize_domain:
     automation:
       initial_state: true
->>>>>>> upstream/master
   allowlist_external_dirs:
     - /config
   legacy_templates: false
@@ -135,38 +81,28 @@ frontend: !include themes.yaml
 template: !include sidebar.yaml
 
 lovelace:
-<<<<<<< HEAD
   mode: yaml #use ui-lovelace.yaml
   resources: #hacs
     [
-      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module },
-      { url: /hacsfiles/bar-card/bar-card.js, type: module },
-      { url: /hacsfiles/button-card/button-card.js, type: module },
-      { url: /hacsfiles/kiosk-mode/kiosk-mode.js, type: module },
-      { url: /hacsfiles/light-entity-card/light-entity-card.js, type: module },
-      { url: /hacsfiles/light-popup-card/light-popup-card.js, type: module },
-      {
-        url: "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?v=0.10.0",
-        type: module,
-      },
-      { url: /hacsfiles/lovelace-card-mod/card-mod.js, type: module },
-      { url: /hacsfiles/lovelace-layout-card/layout-card.js, type: module },
-      {
-        url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,
-        type: module,
-      },
-      {
-        url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,
-        type: module,
-      },
-      { url: /hacsfiles/swipe-card/swipe-card.js, type: module },
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
+      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
+      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
+      { url: /hacsfiles/custom-icons/custom-icons.js,                               type: module },
+      { url: /hacsfiles/kiosk-mode/kiosk-mode.js,                                   type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
+      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js,                  type: module },
+      { url: /hacsfiles/lovelace-mushroom/mushroom.js,                              type: module },
+      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
+      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
+      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
+
+      { url: '/local/marked.min.js?v=4.0.18',                                       type: module },
+      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
+      { url: '/local/fonts.css?v=2.1',                                              type: css },
+
+
       { url: /hacsfiles/lovelace-auto-entities/auto-entities.js, type: module },
-      { url: "/local/calendar-card.js?v=3.109.1", type: module },
-      { url: "/local/custom_icons.js?v=28082021", type: module },
-      { url: "/local/marked.min.js?v=4.0.12", type: module },
-      { url: "/local/vanilla-tilt.min.js?v=1.7.2", type: module },
-      { url: /local/font.css, type: css },
-      { url: /browser_mod.js, type: module },
+##      { url: /browser_mod.js, type: module },
       {
         url: /hacsfiles/seventeen-track-card/seventeen-track-card.js,
         type: module,
@@ -245,42 +181,3 @@ fan:
     name: Xiaomi Smart Fan
     host: !secret xiaomi_fan_host
     token: !secret xiaomi_fan_token
-=======
-  mode: yaml
-  resources:
-    [
-      { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
-      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
-      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
-      { url: /hacsfiles/custom-icons/custom-icons.js,                               type: module },
-      { url: /hacsfiles/kiosk-mode/kiosk-mode.js,                                   type: module },
-      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
-      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js,                  type: module },
-      { url: /hacsfiles/lovelace-mushroom/mushroom.js,                              type: module },
-      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
-      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
-      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
-
-      { url: '/local/marked.min.js?v=4.0.18',                                       type: module },
-      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
-      { url: '/local/fonts.css?v=2.1',                                              type: css }
-    ]
-
-recorder:
-  db_url: !secret recorder_db_url
-  exclude:
-    entity_globs:
-      - sensor.browser_*
-
-logger:
-  default: warning
-  logs:
-    homeassistant.components.websocket_api: fatal
-    custom_components.monitor_docker.helpers: fatal
-
-sensor:
-  - platform: time_date
-    display_options:
-      - time
-      - date
->>>>>>> upstream/master

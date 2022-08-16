@@ -9,23 +9,23 @@ sensor:
     scan_interval: 120
 
   # https://github.com/NemesisRE/sensor.plex_recently_added
-  - platform: plex_recently_added
-    host: !secret nas_host
-    port: !secret plex_port
-    token: !secret plex_token
-    max: 1
-    img_dir: /
-    image_resolution: 800
+  # - platform: plex_recently_added
+  #   host: !secret ds216plus_host
+  #   port: !secret plex_port
+  #   token: !secret plex_token
+  #   max: 1
+  #   img_dir: /
+  #   image_resolution: 800
 
 template:
   - sensor:
       - unique_id: nas_status
         state: >
-          {% set entity_id = 'sensor.nas_volume_1_status' %}
+          {% set entity_id = 'sensor.ds216plus_volume_1_status' %}
           {% if is_state(entity_id, 'normal') %}
-            Bra
+            Normal
           {% elif is_state(entity_id, 'background_scrubbing') %}
-            Dataskrubbning
+            Überprüfen...
           {% else %}
             {{ states(entity_id) }}
           {% endif %}
@@ -55,23 +55,23 @@ template:
             {% set exclude = this.attributes | list %}
             {{ states | rejectattr('domain', 'in', exclude) | list | count }}
 
-shell_command:
-  restart_container: !secret restart_container
-  purge_log: truncate -s 0 /config/home-assistant.log
+# shell_command:
+#   restart_container: !secret restart_container
+#   purge_log: truncate -s 0 /config/home-assistant.log
 
 # https://github.com/ualex73/monitor_docker
-monitor_docker:
-  - name: Docker
-    containers:
-      - watchtower
-      - home-assistant
-      - transmission-seed
-    monitored_conditions: allinone
-    scan_interval: 900
+# monitor_docker:
+#   - name: Docker
+#     containers:
+#       - watchtower
+#       - home-assistant
+#       - transmission-seed
+#     monitored_conditions: allinone
+#     scan_interval: 900
 
 automation:
   - alias: purge_log_filesize
-    id: '3331821824310'
+    id: "3331821824310"
     trigger:
       platform: numeric_state
       entity_id: sensor.home_assistant_log_size

@@ -51,9 +51,11 @@ template:
           {% set recently_added = 'Senast tillagt' %}
           {% set paused_timeout_minutes = 15 %}
           {% set media_players = [
-            states.media_player.vardagsrum,
-            states.media_player.sovrum,
-            states.media_player.spotify ] %}
+            states.media_player.wohnzimmer,
+            states.media_player.receiver,
+            states.media_player.fernseher_im_wohnzimmer_2,
+            states.media_player.onkyo_tx_nr676e_eaaa8f,
+            states.media_player.badezimmer ] %}
 
           {% macro media(state) %}
           {% set state = media_players | selectattr('state','eq',state) | list %}
@@ -79,9 +81,11 @@ template:
         options: >
           {% set recently_added = ['Senast tillagt'] %}
           {% set media_players = [
-            states.media_player.vardagsrum,
-            states.media_player.sovrum,
-            states.media_player.spotify ] %}
+            states.media_player.wohnzimmer,
+            states.media_player.receiver,
+            states.media_player.fernseher_im_wohnzimmer_2,
+            states.media_player.onkyo_tx_nr676e_eaaa8f,
+            states.media_player.badezimmer ] %}
           {{ recently_added + media_players | map(attribute='name') | list }}
         select_option:
           service: select.select_option
@@ -147,12 +151,12 @@ automation:
   #           command: wakeup
 
   - alias: tv_on_lights
-    id: '6657050215613'
+    id: "6657050215613"
     trigger:
       platform: state
       entity_id: media_player.sony_bravia_tv
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
     action:
       service: light.turn_on
       target:
