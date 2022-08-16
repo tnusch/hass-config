@@ -22,3 +22,6 @@ home-assistant_v2.db*
 addons_config
 
 music_assistant.db*
+tts/
+google_calendars.yaml
+known_devices.yaml

@@ -1,19 +1,9 @@
 action: fire-dom-event
 browser_mod:
   command: popup
-  title: "Fläkt\u00B2"
+  title: Ventilator
   card:
-    type: vertical-stack
-    cards:
-      - type: entities
-        state_color: true
-        card_mod:
-          class: content
-        entities:
+    type: custom:more-info-card
+    entity: fan.xiaomi_smart_fan
+    title: Ventilator
 
-          - entity: switch.gosund_fan_switch
-            secondary_info: last-changed
-
-          - type: custom:slider-entity-row
-            entity: input_number.fan_timer
-            hide_state: false

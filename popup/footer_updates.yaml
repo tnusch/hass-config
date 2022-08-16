@@ -1,7 +1,7 @@
 action: fire-dom-event
 browser_mod:
   command: popup
-  title: Uppdateringar
+  title: Updates
   style:
     .: |
       :host .content {
@@ -30,8 +30,8 @@ browser_mod:
         entity: sensor.current_version
         template: updates_hass
         variables:
-          latest: sensor.docker_hub
-          latest_beta: sensor.docker_hub_beta
+          latest: sensor.hass_version_latest
+          latest_beta: sensor.hass_version_latest_beta
           release_notes: sensor.hass_release_notes
           release_notes_beta: sensor.hass_release_notes_beta
 
@@ -39,8 +39,8 @@ browser_mod:
         entity: sensor.current_version
         name: Uppdatera HASS
         variables:
-          latest: sensor.docker_hub
-          latest_beta: sensor.docker_hub_beta
+          latest: sensor.hass_version_latest
+          latest_beta: sensor.hass_version_latest_beta
         tap_action:
           services: |
             [[[

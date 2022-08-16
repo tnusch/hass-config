@@ -89,18 +89,18 @@ template:
             {% endif %}
 
 sensor:
-  - platform: command_line
-    name: updates_kemper
-    command: !secret updates_kemper
-    value_template: >
-      {{ value_json.profiler_installed == value_json.profiler_latest and
-      value_json.rigmanager_latest == value_json.rigmanager_installed }}
-    json_attributes:
-      - profiler_latest
-      - profiler_installed
-      - rigmanager_latest
-      - rigmanager_installed
-    scan_interval: 86400
+  # - platform: command_line
+  #   name: updates_kemper
+  #   command: !secret updates_kemper
+  #   value_template: >
+  #     {{ value_json.profiler_installed == value_json.profiler_latest and
+  #     value_json.rigmanager_latest == value_json.rigmanager_installed }}
+  #   json_attributes:
+  #     - profiler_latest
+  #     - profiler_installed
+  #     - rigmanager_latest
+  #     - rigmanager_installed
+  #   scan_interval: 86400
 
   - platform: command_line
     name: hacs_installed
