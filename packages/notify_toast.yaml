@@ -23,7 +23,7 @@ input_datetime:
 
 automation:
   - alias: toast
-    id: '3900676590344'
+    id: '3161036041566'
     mode: parallel
     trigger:
       platform: state
@@ -34,14 +34,14 @@ automation:
       from: 'off'
       to: 'on'
     action:
-      service: browser_mod.toast
+      service: browser_mod.notification
       data:
         duration: 3000
         message: >
           Rörelse detekterat i {{ trigger.to_state.name }}
 
   - alias: dismiss_lovelace_updated
-    id: '4635035739118'
+    id: '1309195316329'
     mode: restart
     trigger:
       platform: event
@@ -51,13 +51,12 @@ automation:
         count: 5
         sequence:
           - delay: 0.5
-          - service: browser_mod.toast
+          - service: browser_mod.notification
             data:
               duration: 1
               message: ' '
 
   - alias: waste_collection
-    initial_state: false
     id: '5611101897022'
     mode: single
     max_exceeded: silent
@@ -81,19 +80,13 @@ automation:
 
   - alias: ios_notify_hass_update
     id: '7958228563778'
-    variables:
-      installed: >
-        {{ states('sensor.current_version') }}
-      latest: >
-        {{ states('sensor.docker_hub_beta') if 'b' in installed
-        else states('sensor.docker_hub') }}
     trigger:
       platform: state
       entity_id:
         - sensor.docker_hub
         - sensor.docker_hub_beta
     condition: >
-      {{ installed != latest if '.' in installed and '.' in latest else false }}
+      {{ state_attr('sensor.template_updates', 'home_assistant') == 1 }}
     action:
       - service: homeassistant.update_entity
         target:
@@ -101,11 +94,12 @@ automation:
             - sensor.hass_release_notes
             - sensor.hass_release_notes_beta
       - delay:
-          minutes: 20
+          minutes: 15
       - service: notify.mobile_app_iphone
         data:
           title: >
-            {{ latest }} tillgänglig {{ '\U0001F389' }}
+            {{ states('sensor.docker_hub_beta') if version(installed).beta
+            else states('sensor.docker_hub') }} tillgänglig {{ '\U0001F389' }}
           message: Håll in för att uppdatera
           data:
             url: https://www.home-assistant.io/latest-release-notes/
