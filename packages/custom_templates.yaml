@@ -169,15 +169,9 @@ template:
         state: template
         attributes:
           next_waste: |
-            {% set midnight = today_at() %}
-            {% set event = state_attr('calendar.ics_2', 'start_time') | as_datetime | as_local %}
-            {% set delta = event - midnight %}
-            {% if delta.days == 0 %}
-              <b>{{state_attr('calendar.ics_2', 'message')}} heute!</b>
-            {% elif delta.days == 1 %}
-              <b>{{state_attr('calendar.ics_2', 'message')}} morgen!</b>
-            {% elif delta.days == 2 %}
-              {{state_attr('calendar.ics_2', 'message')}} übermorgen
-            {% else %}
-            {{state_attr('calendar.ics_2', 'message')}} in {{ delta.days }} Tagen
-            {% endif %}
+            {% if state_attr('sensor.mullabfuhr', today[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', today[:10]) }} heute!</b>{% endif %}
+            {% if state_attr('sensor.mullabfuhr', tomorrow[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', tomorrow[:10]) }} morgen!</b>{% endif %}
+            {% if state_attr('sensor.mullabfuhr', day_after_tomorrow[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', day_after_tomorrow[:10]) }} übermorgen{% endif %}
+            {% if state_attr('sensor.mullabfuhr', today_plus_3[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_3[:10]) }} in 3 Tagen{% endif %}
+            {% if state_attr('sensor.mullabfuhr', today_plus_4[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_4[:10]) }} in 4 Tagen{% endif %}
+            {% if state_attr('sensor.mullabfuhr', today_plus_5[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_5[:10]) }} in 5 Tagen{% endif %}

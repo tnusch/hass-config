@@ -42,3 +42,16 @@
       - media_content_type: provider
         media_content_id: media-source://tts/google_translate?message=Wasser+in+der+K%C3%BCche
   mode: single
+- id: '1666772652073'
+  alias: NFC Tag Test ist gescannt
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: f4581f85-db36-48fa-99cc-e6bff5b28f30
+  condition: []
+  action:
+  - type: toggle
+    device_id: 6890643ff8cd1dc98103500a602f5cc8
+    entity_id: light.esszimmer_2
+    domain: light
+  mode: single
