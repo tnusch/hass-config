@@ -1,7 +1,7 @@
 homeassistant:
   customize:
-    sensor.nas_volume_1_average_disk_temp:
-      friendly_name: Disktemperatur
+    sensor.ds216_volume_1_average_disk_temp:
+      friendly_name: Festplattentemperatur
     sensor.processor_use_percent:
       icon: mdi:chip
 
@@ -26,7 +26,7 @@ sensor:
 
 template:
   - sensor:
-      - unique_id: nas_status
+      - unique_id: ds216_status
         state: >
           {% set entity_id = 'sensor.ds216plus_volume_1_status' %}
           {% if is_state(entity_id, 'normal') %}
@@ -37,7 +37,7 @@ template:
             {{ states(entity_id) }}
           {% endif %}
         attributes:
-          friendly_name: Systemhälsa
+          friendly_name: Status
           icon: cil:synology-nas
 
       - unique_id: domain_counter

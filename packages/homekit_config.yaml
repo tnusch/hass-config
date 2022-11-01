@@ -13,7 +13,7 @@
 #         - script.home_leave
 #         - script.home_arrive
 #         - script.samsung_tv_energy_saving
-#         - vacuum.morty
+#         - vacuum.robi
 #         - script.bedroom_tv_night
 #     entity_config:
 #       switch.deltaco_sh_p01_socket:
@@ -38,8 +38,8 @@
 #         name: Hemma
 #       script.samsung_tv_energy_saving:
 #         name: Eko
-#       vacuum.morty:
-#         name: Morty
+#       vacuum.robi:
+#         name: robi
 #       script.bedroom_tv_night:
 #         name: Nattläge
 

@@ -2,7 +2,7 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Uppdateringar
+    title: Updates
     card_mod:
       style:
         #popup header
@@ -40,7 +40,7 @@ browser_mod:
 
           - type: custom:button-card
             entity: sensor.current_version
-            name: Uppdatera HASS
+            name: Update HASS
             variables:
               latest: sensor.docker_hub
               latest_beta: sensor.docker_hub_beta
@@ -68,7 +68,7 @@ browser_mod:
 
           - type: custom:button-card
             entity: sensor.template_updates
-            name: Uppdateringar
+            name: Updates
             template:
               - updates_icon_name
               - >
@@ -84,9 +84,9 @@ browser_mod:
                 sequence:
                   - service: browser_mod.notification
                     data:
-                      message: Söker efter uppdateringar...
+                      message: Suche nach Updates...
                   - service: homeassistant.update_entity
                     data:
                       entity_id:
                         - sensor.updates_esphome_latest
-                        - sensor.updates_kemper
+                        # - sensor.updates_kemper

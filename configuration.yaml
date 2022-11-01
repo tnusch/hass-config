@@ -5,7 +5,7 @@ default_config:
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
+# group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -22,17 +22,17 @@ device_tracker:
 wake_on_lan:
 
 switch:
-  - platform: wake_on_lan
-    mac: !secret mac_pc_tim
-    name: WOL PC Tim
+  # - platform: wake_on_lan
+  #   mac: !secret mac_pc_tim
+  #   name: WOL PC Tim
   - platform: wake_on_lan
     mac: !secret mac_drucker
     name: WOL Drucker
 
 # python_script:
 
-browser_mod:
-  prefix: browser_
+# browser_mod:
+#   prefix: browser_
 
 logger:
   default: info
@@ -102,7 +102,7 @@ lovelace:
 
 
       { url: /hacsfiles/lovelace-auto-entities/auto-entities.js, type: module },
-##      { url: /browser_mod.js, type: module },
+      { url: '/local/browser_mod_icon.js?v=0.3',                                    type: module },
       {
         url: /hacsfiles/seventeen-track-card/seventeen-track-card.js,
         type: module,
@@ -113,6 +113,7 @@ lovelace:
       },
       { url: "/hacsfiles/rmv-card/rmv-card.js?v=0", type: module },
       { url: "/hacsfiles/lovelace-fan-xiaomi/fan-xiaomi.js", type: module },
+      { url: "/hacsfiles/custom-brand-icons/custom-brand-icons.js", type: module }
     ]
 
 recorder:
@@ -164,20 +165,8 @@ recorder:
       - camera.xiaomi_cloud_map_extractor
       - sensor.home_assistant_log
 
-person:
-  # - name: Tim
-  #   id: tim
-  #   device_trackers:
-  #     - device_tracker.handy_tim
-  #     - device_tracker.uhr_tim
-
-  - name: Clarissa
-    id: clarissa
-    device_trackers:
-      - device_tracker.handy_clarissa
-
-fan:
-  - platform: xiaomi_miio_fan
-    name: Xiaomi Smart Fan
-    host: !secret xiaomi_fan_host
-    token: !secret xiaomi_fan_token
+# fan:
+#   - platform: xiaomi_miio_fan
+#     name: Xiaomi Smart Fan
+#     host: !secret xiaomi_fan_host
+#     token: !secret xiaomi_fan_token

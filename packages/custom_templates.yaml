@@ -8,30 +8,36 @@ template:
             {%- set weather = states('weather.heidelberg') %}
             {%- set precip = states('sensor.precipitation_probability_heidelberg') | round %}
             {% if not is_state('sensor.temperature_heidelberg', 'unknown') %}
-              {%- if weather == 'sunny' -%}
-                {{'\u2600\ufe0f'}} {{ temperature }}°
+              {%- if weather == 'cloudy' -%}
+                ☁ {{ temperature }}°
+              {%- elif weather == 'clear-night' -%}
+                🌃 {{ temperature }}°
               {%- elif weather == 'fog' -%}
-                {{'\uD83C\uDF2B\ufe0f'}} {{ temperature }}°
+                🌫 {{ temperature }}°
+              {%- elif weather == 'hail' -%}
+                ⛈ {{ temperature }}°
               {%- elif weather == 'lightning' -%}
-                {{'\uD83C\uDF29\ufe0f'}} {{ temperature }}°
+                🌩️ {{ temperature }}°
               {%- elif weather == 'lightning-rainy' -%}
-                {{'\u26c8\ufe0f'}} {{ temperature }}°
+                ⛈️ {{ temperature }}°
               {%- elif weather == 'partlycloudy' -%}
-                {{'\u26c5\ufe0f'}} {{ temperature }}°
+                ⛅️ {{ temperature }}°
               {%- elif weather == 'pouring' -%}
-                {{'\uD83C\uDF27\ufe0f'}} {{ temperature }}°
+                🌧️ {{ temperature }}°
               {%- elif weather == 'rainy' -%}
-                {{'\uD83C\uDF27\ufe0f'}} {{ temperature }}°
+                🌧️ {{ temperature }}°
               {%- elif weather == 'snowy' -%}
-                {{'\uD83C\uDF28\ufe0f'}} {{ temperature }}°
+                🌨️ {{ temperature }}°
               {%- elif weather == 'snowy-rainy' -%}
-                {{'\uD83C\uDF28\ufe0f'}} {{ temperature }}°
+                🌨️ {{ temperature }}°
+              {%- elif weather == 'sunny' -%}
+                ☀️ {{ temperature }}°
               {%- elif weather == 'windy' -%}
-                {{'\uD83C\uDF2C\ufe0f'}} {{ temperature }}°
+                🌬️ {{ temperature }}°
               {%- elif weather == 'windy-variant' -%}
-                {{'\uD83C\uDF2C\ufe0f'}} {{ temperature }}°
+                🌬️ {{ temperature }}°
               {%- elif weather == 'exceptional' -%}
-                {{'\u2b55\ufe0f'}} {{ temperature }}°
+                ⭕️ {{ temperature }}°
               {%- endif %}
             {%- else %}
               Wetterinformationen können nicht geladen werden

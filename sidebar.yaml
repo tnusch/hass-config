@@ -36,33 +36,14 @@
           <b>
           {% set lights = [
             states.light.wohnzimmer,
-            states.light.esszimmer,
-            states.light.vardagsrum_tv,
-            states.light.vardagsrum_golv,
-            states.light.vardagsrum_horna,
-            states.light.studio_dator,
-            states.light.badrum_vask_2,
-            states.light.badrum_vask_1,
-            states.light.sovrum_tv,
-            states.light.garderob_lampa,
-            states.light.hall_spot_1,
-            states.light.hall_spot_2,
-            states.light.hall_spot_3,
-            states.light.sovrum_mattias,
-            states.light.sovrum_sanja,
-            states.light.studio_spot_1,
-            states.light.studio_spot_2,
-            states.switch.deltaco_sh_p01_socket
+            states.light.esszimmer
           ] %}
 
           {% set devices = [
-            states.switch.imac,
-            states.switch.ps5_635_power,
-            states.switch.gosund_monitors_switch,
-            states.switch.gosund_fan_switch,
-            states.media_player.samsung,
-            states.media_player.sony_bravia_tv,
-            states.climate.ac
+            states.media_player.badezimmer,
+            states.media_player.fernseher_im_wohnzimmer_2,
+            states.media_player.onkyo_tx_nr676e_eaaa8f,
+            states.media_player.wohnzimmer
           ] %}
 
           {% set lights_on = lights | selectattr('state','eq','on') | list %}
@@ -71,19 +52,19 @@
           {% set devices_on = devices | selectattr('state','search','(on|cool|fan_only|playing)') | list %}
           {% set devices_name = devices_on | map(attribute='name') | join(', ') %}
 
-          {%- if (lights_on | length == 0) and (switches_on | length > 0) -%} 
-            {{ switches_name | regex_replace(',([^,]*)$',' och\\1') }} ist eingeschaltet
-          {%- elif (lights_on | length == 1) and (switches_on | length == 1) -%}
-            {{ lights_name }} und {{switches_name }} ist eingeschaltet
-          {%- elif (lights_on | length == 1) and (switches_on | length > 1) -%}
-            {{ lights_name }}, {{ switches_name | regex_replace(',([^,]*)$',' och\\1') }} sind eingeschaltet
-          {%- elif (lights_on | length > 1) and (switches_on | length == 1) -%}
-            {{ lights_on | length }} Lampen und {{ switches_name }} sind eingeschaltet
-          {%- elif (lights_on | length > 1) and (switches_on | length > 1) -%}
-            {{ lights_on | length }} Lampen, {{ switches_name | regex_replace(',([^,]*)$',' och\\1') }} sind eingeschaltet
-          {%- elif (lights_on | length == 1) and (switches_on | length == 0) -%}
-            {{ lights_name }} ist eingeschaltet
-          {%- elif (lights_on | length > 1) and (switches_on | length == 0) -%}
+          {%- if (lights_on | length == 0) and (devices_on | length > 0) -%} 
+            {{ devices_name | regex_replace(',([^,]*)$',' und\\1') }} ist eingeschaltet
+          {%- elif (lights_on | length == 1) and (devices_on | length == 1) -%}
+            {{ lights_name }} 💡 und {{devices_name }} 🎵 ist eingeschaltet
+          {%- elif (lights_on | length == 1) and (devices_on | length > 1) -%}
+            {{ lights_name }} 💡, {{ devices_name | regex_replace(',([^,]*)$',' und\\1') }} sind eingeschaltet
+          {%- elif (lights_on | length > 1) and (devices_on | length == 1) -%}
+            {{ lights_on | length }} Lampen und {{ devices_name }} 🎵 sind eingeschaltet
+          {%- elif (lights_on | length > 1) and (devices_on | length > 1) -%}
+            {{ lights_on | length }} Lampen, {{ devices_name | regex_replace(',([^,]*)$',' und\\1') }} sind eingeschaltet
+          {%- elif (lights_on | length == 1) and (devices_on | length == 0) -%}
+            {{ lights_name }} 💡 ist eingeschaltet
+          {%- elif (lights_on | length > 1) and (devices_on | length == 0) -%}
             {{ lights_on | length }} Lampen sind an
           {%- else %}
             <font color='#6a7377'>Alles ist aus</font>
@@ -95,7 +76,7 @@
             {{ '\U0001F4EC' }} <font color='#6a7377'><b>Brevlåda ({{ mailbox }})</b></font>
           {% endif %}
         vacuum: >
-          {% set entity_id = 'vacuum.morty' %}
+          {% set entity_id = 'vacuum.robi' %}
           {% if is_state(entity_id, 'cleaning') %}
             <b>Staubsauger läuft</b>
           {% elif is_state(entity_id, 'returning') %}
