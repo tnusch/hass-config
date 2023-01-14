@@ -28,7 +28,25 @@ script:
         data:
           media_content_type: send_key
           media_content_id: >
-            KEY_MENU+1500+KEY_DOWN+500+KEY_DOWN+500+KEY_DOWN+500+KEY_ENTER+1000+KEY_DOWN+500+KEY_DOWN+500+KEY_DOWN+500+KEY_DOWN+500+KEY_ENTER+1000+KEY_ENTER+1000+KEY_DOWN+500+KEY_DOWN+500+KEY_ENTER+1000+KEY_HOME+500+KEY_HOME+500
+            {% set sequence = [
+              'KEY_MENU', '1600',
+              'KEY_DOWN', '400',
+              'KEY_DOWN', '400',
+              'KEY_DOWN', '400',
+              'KEY_ENTER', '900',
+              'KEY_DOWN', '400',
+              'KEY_DOWN', '400',
+              'KEY_DOWN', '400',
+              'KEY_ENTER', '900',
+              'KEY_ENTER', '400',
+              'KEY_DOWN', '400',
+              'KEY_DOWN', '400',
+              'KEY_ENTER', '400',
+              'KEY_HOME', '400',
+              'KEY_HOME'
+            ] %}
+
+            {{ sequence | join('+') }}
 
   bedroom_tv_night:
     alias: Nattläge
