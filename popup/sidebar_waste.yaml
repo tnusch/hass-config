@@ -1,0 +1,33 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Müllabfuhr
+    content:
+      card:
+      type: custom:atomic-calendar-revive
+      entities:
+        - calendar.ics_2
+      firstDayOfWeek: 1
+      maxDaysToShow: 14
+      refreshInterval: 60
+      disableCalEventLink: true
+      disableCalLocationLink: true
+      disableCalLink: true
+      showLastCalendarWeek: false
+      calShowDescription: false
+      showDescription: false
+      showMonth: false
+      showFullDayProgress: false
+      showHiddenText: false
+      showEventIcon: false
+      showCalendarName: false
+      showNoEventsForToday: false
+      disableEventLink: true
+      showWeekDay: true
+      dimFinishedEvents: true
+      showLocation: false
+      showRelativeTime: false
+      hideFinishedEvents: false
+      showDate: false
+      disableLocationLink: true

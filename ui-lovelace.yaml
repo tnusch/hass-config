@@ -101,6 +101,11 @@ views:
             template: sidebar_departures
             tap_action: !include popup/sidebar_departures.yaml
 
+          - type: custom:button-card
+            entity: sensor.nachster_mull
+            template: sidebar
+            tap_action: !include popup/sidebar_waste.yaml
+
           # - type: conditional
           #   conditions:
           #     - entity: input_boolean.laundry_display

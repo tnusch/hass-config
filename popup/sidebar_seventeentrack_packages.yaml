@@ -5,7 +5,7 @@ browser_mod:
     title: Pakete
     content:
       card:
-      type: custom:auto-entities
+        type: custom:auto-entities
       card:
         type: vertical-stack
       card_param: cards

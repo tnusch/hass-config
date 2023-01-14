@@ -137,15 +137,15 @@ template:
         device_class: timestamp
         state: >
           {{ state_attr('sensor.backup_state', 'last_backup') }}
-      - unique_id: all_updates
-        name: All updates
-        icon: mdi:update
-        state: >
-          {% set hacs = states('sensor.hacs') | int %}
-          {% set updaters = states.update 
-            | selectattr('state','eq','on')
-            | map(attribute = 'entity_id') | list | length | int  %}
-          {{ hacs + updaters }}
+      # - unique_id: all_updates
+      #   name: All updates
+      #   icon: mdi:update
+      #   state: >
+      #     {% set hacs = states('sensor.hacs') | int %}
+      #     {% set updaters = states.update
+      #       | selectattr('state','eq','on')
+      #       | map(attribute = 'entity_id') | list | length | int  %}
+      #     {{ hacs + updaters }}
       - unique_id: bad_schoenborn_departures
         # name: Bad Schönborn-Kronau
         # icon: mdi:train
@@ -170,14 +170,21 @@ template:
             {{ dep_2_line ~ ' ' ~ dep_2_dir ~ ' - ' ~ dep_2_time[11:16]}}
 
       - unique_id: bad_schoenborn_next_waste
-        name: Nächster Müll
-        icon: mdi:delete
+        # name: Nächster Müll
+        # icon: mdi:delete
         state: template
         attributes:
           next_waste: |
-            {% if state_attr('sensor.mullabfuhr', today[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', today[:10]) }} heute!</b>{% endif %}
-            {% if state_attr('sensor.mullabfuhr', tomorrow[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', tomorrow[:10]) }} morgen!</b>{% endif %}
-            {% if state_attr('sensor.mullabfuhr', day_after_tomorrow[:10]) != None %}<b>{{ state_attr('sensor.mullabfuhr', day_after_tomorrow[:10]) }} übermorgen{% endif %}
-            {% if state_attr('sensor.mullabfuhr', today_plus_3[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_3[:10]) }} in 3 Tagen{% endif %}
-            {% if state_attr('sensor.mullabfuhr', today_plus_4[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_4[:10]) }} in 4 Tagen{% endif %}
-            {% if state_attr('sensor.mullabfuhr', today_plus_5[:10]) != None %}{{ state_attr('sensor.mullabfuhr', today_plus_5[:10]) }} in 5 Tagen{% endif %}
+            {% set today = states('sensor.date') %}
+            {% set tomorrow = (as_timestamp(now()) + 1*(24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
+            {% set day_after_tomorrow = (as_timestamp(now()) + 2*(24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
+            {% set today_plus_3 = (as_timestamp(now()) + 3*(24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
+            {% set today_plus_4 = (as_timestamp(now()) + 4*(24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
+            {% set today_plus_5 = (as_timestamp(now()) + 5*(24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
+                      
+            {% if state_attr('sensor.muellabfuhr', today) != None %}<b>{{ state_attr('sensor.muellabfuhr', today) }} heute!</b>{% endif %}
+            {% if state_attr('sensor.muellabfuhr', tomorrow) != None %}<b>{{ state_attr('sensor.muellabfuhr', tomorrow) }} morgen!</b>{% endif %}
+            {% if state_attr('sensor.muellabfuhr', day_after_tomorrow) != None %}{{ state_attr('sensor.muellabfuhr', day_after_tomorrow) }} übermorgen{% endif %}
+            {% if state_attr('sensor.muellabfuhr', today_plus_3) != None %}{{ state_attr('sensor.muellabfuhr', today_plus_3) }} in 3 Tagen{% endif %}
+            {% if state_attr('sensor.muellabfuhr', today_plus_4) != None %}{{ state_attr('sensor.muellabfuhr', today_plus_4) }} in 4 Tagen{% endif %}
+            {% if state_attr('sensor.muellabfuhr', today_plus_5) != None %}{{ state_attr('sensor.muellabfuhr', today_plus_5) }} in 5 Tagen{% endif %}

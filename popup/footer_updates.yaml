@@ -33,8 +33,8 @@ browser_mod:
             template: updates_hass
             variables:
               available: sensor.template_updates
-              latest: sensor.docker_hub
-              latest_beta: sensor.docker_hub_beta
+              latest: sensor.hass_version_latest_beta
+              latest_beta: sensor.hass_version_latest
               release_notes: sensor.hass_release_notes
               release_notes_beta: sensor.hass_release_notes_beta
 
@@ -42,8 +42,8 @@ browser_mod:
             entity: sensor.current_version
             name: Update HASS
             variables:
-              latest: sensor.docker_hub
-              latest_beta: sensor.docker_hub_beta
+              latest: sensor.hass_version_latest
+              latest_beta: sensor.hass_version_latest_beta
             tap_action:
               action: call-service
               service: browser_mod.sequence

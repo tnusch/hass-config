@@ -112,6 +112,7 @@ lovelace:
         type: module,
       },
       { url: "/hacsfiles/rmv-card/rmv-card.js?v=0", type: module },
+      { url: "/hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js", type: module },
       { url: "/hacsfiles/lovelace-fan-xiaomi/fan-xiaomi.js", type: module },
       { url: "/hacsfiles/custom-brand-icons/custom-brand-icons.js", type: module }
     ]

@@ -4,14 +4,14 @@ sensor:
       - time
       - date
 
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /
-      - type: memory_use_percent
-      - type: processor_use
-      - type: last_boot
-    scan_interval: 120
+  # - platform: systemmonitor
+  #   resources:
+  #     - type: disk_use_percent
+  #       arg: /
+  #     - type: memory_use_percent
+  #     - type: processor_use
+  #     - type: last_boot
+  #   scan_interval: 120
 
   ####################################################
   #                                                  #
@@ -20,8 +20,8 @@ sensor:
   ####################################################
 
   - platform: waste_collection_schedule
-    name: Müllabfuhr
-    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'
+    name: Muellabfuhr
+    value_template: "{{value.daysTo}}|{{value.types}}"
 
   ####################################################
   #                                                  #

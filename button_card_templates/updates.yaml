@@ -152,7 +152,7 @@ updates:
               : `${count} ${count === 1 ? update_available : updates_available} ${String.fromCodePoint('0x1f389')}`;
 
       return `
-        <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrationer</span><br>
+        <ha-icon icon="mdi:package-up"></ha-icon> <span class="title">Integrations</span><br>
         <p class="subtitle">${subtitle}</p>
         <ul>${output}</ul>
       `;
@@ -176,7 +176,7 @@ hacs_iframe:
     browser_mod:
       service: browser_mod.popup
       data:
-        title: ' '
+        title: " "
         size: fullscreen
         content:
           type: iframe
