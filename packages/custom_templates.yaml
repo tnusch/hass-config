@@ -4,10 +4,10 @@ template:
         state: template
         attributes:
           weather: |
-            {%- set temperature = states('sensor.temperature_heidelberg') %}
-            {%- set weather = states('weather.heidelberg') %}
-            {%- set precip = states('sensor.precipitation_probability_heidelberg') | round %}
-            {% if not is_state('sensor.temperature_heidelberg', 'unknown') %}
+            {%- set temperature = states('sensor.temperature_bruchsal_heidelsheim') %}
+            {%- set weather = states('weather.bruchsal_heidelsheim') %}
+            {%- set precip = states('sensor.precipitation_probability_bruchsal_heidelsheim') | round %}
+            {% if not is_state('sensor.temperature_bruchsal_heidelsheim', 'unknown') %}
               {%- if weather == 'cloudy' -%}
                 ☁ {{ temperature }}°
               {%- elif weather == 'clear-night' -%}

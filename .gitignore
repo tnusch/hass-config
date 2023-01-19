@@ -13,6 +13,7 @@ custom_components/
 www/community/
 www/fonts/
 www/Plex_Recently_Added/
+www/Guest_Wifi.jpg
 
 *.code-workspace
 home-assistant.log*

@@ -42,18 +42,27 @@ logger:
 
 waste_collection_schedule:
   sources:
-    name: ics
+  - name: ics
     args:
       url: "https://waste.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalteBlank/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=707245001&AboID=23908"
     customize:
-      - type: Mobile Schadstoffsammlung
-        alias: Schadstoffe
+      # - type: Mobile Schadstoffsammlung
+      #   alias: Schadstoffe
       - type: Biobehaelter
         alias: Bio
       - type: Restabfallbehaelter
         alias: Restabfall
       - type: Wertstoffbehaelter
         alias: Wertstoff
+  - name: static
+    calendar_title: Papier
+    args:
+      type: Papier
+      frequency: WEEKLY
+      interval: 4
+      start: '2023-01-26'
+      until: '2023-12-14'
+
 
 media_player:
   - platform: onkyo
@@ -68,6 +77,7 @@ homeassistant:
   unit_system: metric
   temperature_unit: C
   time_zone: Europe/Berlin
+  country: DE
   currency: EUR
   packages: !include_dir_named packages
   customize_domain:
@@ -95,14 +105,15 @@ lovelace:
       { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
       { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
       { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
+      { url: /hacsfiles/tabbed-card/tabbed-card.js,                                 type: module },
 
-      { url: '/local/marked.min.js?v=4.0.18',                                       type: module },
-      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
+      { url: '/local/marked.min.js?v=4.2.5',                                       type: module },
+      { url: '/local/vanilla-tilt.min.js?v=1.8.0',                                  type: module },
       { url: '/local/fonts.css?v=2.1',                                              type: css },
 
 
       { url: /hacsfiles/lovelace-auto-entities/auto-entities.js, type: module },
-      { url: '/local/browser_mod_icon.js?v=0.3',                                    type: module },
+      { url: '/local/browser_mod_icon.js?v=0.5',                                    type: module },
       {
         url: /hacsfiles/seventeen-track-card/seventeen-track-card.js,
         type: module,

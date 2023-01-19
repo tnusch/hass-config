@@ -6,6 +6,6 @@ browser_mod:
     content:
       card:
       type: weather-forecast
-      entity: weather.heidelberg
+      entity: weather.bruchsal_heidelsheim
       show_forecast: true
-      name: Heidelberg
+      name: bruchsal_heidelsheim

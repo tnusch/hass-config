@@ -80,11 +80,17 @@ views:
           - type: custom:button-card
             entity: sensor.template_sidebar
             template: sidebar
+            styles:
+              card:
+                - border-width: 0
 
           - type: custom:button-card
             entity: sensor.template_weather
             template: sidebar
             tap_action: !include popup/sidebar_weather.yaml
+            styles:
+              card:
+                - border-width: 0
 
           - type: conditional
             conditions:
@@ -95,16 +101,25 @@ views:
               entity: sensor.template_seventeentrack_packages
               template: sidebar
               tap_action: !include popup/sidebar_seventeentrack_packages.yaml
+              styles:
+                card:
+                  - border-width: 0
 
           - type: custom:button-card
             entity: sensor.bad_schonborn_kronau
             template: sidebar_departures
             tap_action: !include popup/sidebar_departures.yaml
+            styles:
+              card:
+                - border-width: 0
 
           - type: custom:button-card
             entity: sensor.nachster_mull
             template: sidebar
             tap_action: !include popup/sidebar_waste.yaml
+            styles:
+              card:
+                - border-width: 0
 
           # - type: conditional
           #   conditions:
