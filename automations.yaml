@@ -1,56 +1,122 @@
-- id: "1637874267399"
+- id: '1637874267399'
   alias: System - Set Custom Theme at Startup
   trigger:
-    - platform: homeassistant
-      event: start
+  - platform: homeassistant
+    event: start
   action:
-    - service: frontend.set_theme
-      data:
-        name: tablet
+  - service: frontend.set_theme
+    data:
+      name: tablet
   initial_state: true
   mode: single
-- id: "1652002480816"
+- id: '1652002480816'
   alias: Benachrichtigung Wassersensor Küche
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.wassersensor_kuche
-      from: "off"
-      to: "on"
+  - platform: state
+    entity_id:
+    - binary_sensor.wassersensor_kuche
+    from: 'off'
+    to: 'on'
   condition: []
   action:
-    - service: notify.mobile_app_vtr_l09
-      data:
-        message: Wasser in der Küche
-    - service: media_player.play_media
-      target:
-        entity_id: media_player.wohnzimmer
-      data:
+  - service: notify.mobile_app_vtr_l09
+    data:
+      message: Wasser in der Küche
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.wohnzimmer
+    data:
+      media_content_id: media-source://tts/google_translate?message=Wasser+in+der+K%C3%BCche
+      media_content_type: provider
+    metadata:
+      title: Wasser in der Küche
+      thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+      media_class: app
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://tts
+      - media_content_type: provider
         media_content_id: media-source://tts/google_translate?message=Wasser+in+der+K%C3%BCche
-        media_content_type: provider
-      metadata:
-        title: Wasser in der Küche
-        thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
-        media_class: app
-        children_media_class:
-        navigateIds:
-          - {}
-          - media_content_type: app
-            media_content_id: media-source://tts
-          - media_content_type: provider
-            media_content_id: media-source://tts/google_translate?message=Wasser+in+der+K%C3%BCche
   mode: single
-- id: "1666772652073"
+- id: '1666772652073'
   alias: NFC Tag Test ist gescannt
-  description: ""
+  description: ''
   trigger:
-    - platform: tag
-      tag_id: f4581f85-db36-48fa-99cc-e6bff5b28f30
+  - platform: tag
+    tag_id: f4581f85-db36-48fa-99cc-e6bff5b28f30
   condition: []
   action:
-    - type: toggle
-      device_id: 6890643ff8cd1dc98103500a602f5cc8
-      entity_id: light.esszimmer_2
-      domain: light
+  - type: toggle
+    device_id: 6890643ff8cd1dc98103500a602f5cc8
+    entity_id: light.esszimmer_2
+    domain: light
+  mode: single
+- id: '1674120038581'
+  alias: Lightstrip Umschalten
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: f4581f85-db36-48fa-99cc-e6bff5b28f30
+  condition: []
+  action:
+  - type: toggle
+    device_id: 4eb33e85485c7d06d680c8aba4fc78e2
+    entity_id: light.extended_color_light_11
+    domain: light
+  mode: single
+- id: '1675889922334'
+  alias: TGTG Sushi Palace - Bad Schönborn
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.tgtg_sushi_palace_bad_schonborn
+    above: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_iphone_von_tim
+    data:
+      message: TGTG Sushi Palace - Bad Schönborn
+  mode: single
+- id: '1675962479779'
+  alias: TGTG Laib & Leben
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.tgtg_laib_leben_mingolsheim
+    above: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_iphone_von_tim
+    data:
+      message: TGTG Laib & Leben
+  mode: single
+- id: '1675962509083'
+  alias: TGTG Köhler's Landbäckerei
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.tgtg_kohler_s_landbackerei_langenbrucken
+    above: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_iphone_von_tim
+    data:
+      message: TGTG Köhler's Landbäckerei
+  mode: single
+- id: '1676467430805'
+  alias: Control lightstrip
+  description: ''
+  trigger:
+  - device_id: 6b85081e16787c82371084485ae28526
+    domain: deconz
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - service: script.lightstrip_umschalten
+    data: {}
   mode: single

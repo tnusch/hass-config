@@ -192,18 +192,18 @@ views:
                     template:
                       - light
                       - icon_spot
-                  - type: custom:button-card
-                    entity: sensor.wohnzimmer
-                    name: Wohnen
-                    template:
-                      - multisensor
-                      - icon_multisensor
-                  - type: custom:button-card
-                    entity: sensor.wohnzimmer
-                    name: Abstellraum
-                    template:
-                      - multisensor
-                      - icon_multisensor
+                  # - type: custom:button-card
+                  #   entity: sensor.wohnzimmer
+                  #   name: Wohnen
+                  #   template:
+                  #     - multisensor
+                  #     - icon_multisensor
+                  # - type: custom:button-card
+                  #   entity: sensor.wohnzimmer
+                  #   name: Abstellraum
+                  #   template:
+                  #     - multisensor
+                  #     - icon_multisensor
                   - type: custom:button-card
                     entity: light.tbd
                     name: Treppe
@@ -278,28 +278,39 @@ views:
                       - icon_ceiling-adore-alt-flush
 
                   - type: custom:button-card
+                    entity: sensor.schlafzimmer
+                    name: Schlafen
+                    tap_action: !include popup/multisensor_schlafzimmer.yaml
+                    template:
+                      - multisensor
+                      - icon_multisensor
+
+                  - type: custom:button-card
+                    entity: sensor.clarissas_buro
+                    name: Clarissa
+                    tap_action: !include popup/multisensor_clarissas_buro.yaml
+                    template:
+                      - multisensor
+                      - icon_multisensor
+
+                  - type: custom:button-card
+                    entity: sensor.lillys_zimmer
+                    name: Lilly
+                    tap_action: !include popup/multisensor_lillys_zimmer.yaml
+                    template:
+                      - multisensor
+                      - icon_multisensor
+
+              - type: grid
+                columns: 2
+                cards:
+                  - type: custom:button-card
                     entity: light.tbd
                     name: Schlafen
                     template:
                       - light
                       - icon_ceiling-round
 
-                  - type: custom:button-card
-                    entity: sensor.badezimmer
-                    name: Schlafen
-                    template:
-                      - multisensor
-                      - icon_multisensor
-
-                  - type: custom:button-card
-                    entity: sensor.badezimmer
-                    name: Lilly
-                    template:
-                      - multisensor
-                      - icon_multisensor
-              - type: grid
-                columns: 2
-                cards:
                   - type: custom:button-card
                     entity: light.tbd
                     name: Flur
@@ -384,6 +395,14 @@ views:
                 columns: 2
                 cards:
                   - type: custom:button-card
+                    entity: sensor.dachgeschoss
+                    name: Dachgeschoss
+                    tap_action: !include popup/multisensor_dachgeschoss.yaml
+                    template:
+                      - multisensor
+                      - icon_multisensor
+
+                  - type: custom:button-card
                     entity: light.tbd
                     name: Büro
                     template:
@@ -397,12 +416,12 @@ views:
                       - light
                       - icon_ceiling-round
 
-                  - type: custom:button-card
-                    entity: light.tbd
-                    name: Bad
-                    template:
-                      - light
-                      - icon_ceiling-adore-alt-flush
+                  # - type: custom:button-card
+                  #   entity: light.tbd
+                  #   name: Bad
+                  #   template:
+                  #     - light
+                  #     - icon_ceiling-adore-alt-flush
 
                   - type: custom:button-card
                     entity: fan.xiaomi_smart_fan
@@ -412,15 +431,15 @@ views:
                       - base
                       - icon_fan2
                       - loader
-              - type: grid
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    entity: light.tbd
-                    name: Treppe 2
-                    template:
-                      - light
-                      - icon_spot
+              # - type: grid
+              #   columns: 2
+              #   cards:
+              #     - type: custom:button-card
+              #       entity: light.tbd
+              #       name: Treppe 2
+              #       template:
+              #         - light
+              #         - icon_spot
         # columns: 2
         # cards:
         #   - type: custom:button-card

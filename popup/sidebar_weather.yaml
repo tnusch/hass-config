@@ -8,4 +8,4 @@ browser_mod:
       type: weather-forecast
       entity: weather.bruchsal_heidelsheim
       show_forecast: true
-      name: bruchsal_heidelsheim
+      name: Bad Schönborn

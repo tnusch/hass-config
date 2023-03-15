@@ -1,0 +1,25 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Lillys Zimmer
+    content:
+      type: grid
+      columns: 1
+      square: false
+      cards:
+        - type: entities
+          entities:
+            - entity: sensor.3_lillys_zimmer_temperature
+              secondary_info: last-updated
+              name: Temperatur
+            - entity: sensor.3_lillys_zimmer_humidity
+              secondary_info: last-updated
+              name: Luftfeuchtigkeit
+          show_header_toggle: false
+          state_color: false
+        - type: history-graph
+          entities:
+            - entity: sensor.3_lillys_zimmer_temperature
+            - entity: sensor.3_lillys_zimmer_humidity
+          hours_to_show: 48

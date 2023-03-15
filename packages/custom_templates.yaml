@@ -100,37 +100,78 @@ template:
             {%- endif %}
             </b>
 
-      - unique_id: wohnzimmer
-        name: Wohnzimmer
+      - unique_id: dachgeschoss_multi
+        name: Dachgeschoss
         icon: mdi:leak
         state: >
-          {{ states('sensor.wohnzimmer_temperature') }}
+          {{ states('sensor.1_dachgeschoss_temperature') }}
         attributes:
           battery: >
-            {{ states('sensor.wohnzimmer_battery_level') }}
+            {{ states('sensor.1_dachgeschoss_battery_level') }}
           humidity: >
-            {{ states('sensor.wohnzimmer_humidity') }}
+            {{ states('sensor.1_dachgeschoss_humidity') }}
           pressure: >
-            {{ states('sensor.wohnzimmer_pressure') }}
+            {{ states('sensor.1_dachgeschoss_pressure') }}
           temperature: >
-            {{ states('sensor.wohnzimmer_temperature') }}
+            {{ states('sensor.1_dachgeschoss_temperature') }}
+          last_updated: >
+            {{ states.sensor['1_dachgeschoss_humidity'].last_updated }}
           unit_of_measurement: "°C"
 
-      - unique_id: badezimmer
-        name: Badezimmer
+      - unique_id: clarissas_buro_multi
+        name: Clarissas Büro
         icon: mdi:leak
         state: >
-          {{ states('sensor.bad_temperature') }}
+          {{ states('sensor.2_clarissas_buro_temperature') }}
         attributes:
           battery: >
-            {{ states('sensor.bad_battery_level') }}
+            {{ states('sensor.2_clarissas_buro_battery_level') }}
           humidity: >
-            {{ states('sensor.bad_humidity') }}
+            {{ states('sensor.2_clarissas_buro_humidity') }}
           pressure: >
-            {{ states('sensor.bad_pressure') }}
+            {{ states('sensor.2_clarissas_buro_pressure') }}
           temperature: >
-            {{ states('sensor.bad_temperature') }}
+            {{ states('sensor.2_clarissas_buro_temperature') }}
+          last_updated: >
+            {{ states.sensor['2_clarissas_buro_humidity'].last_updated }}
           unit_of_measurement: "°C"
+
+      - unique_id: lillys_zimmer_multi
+        name: Lillys Zimmer
+        icon: mdi:leak
+        state: >
+          {{ states('sensor.3_lillys_zimmer_temperature') }}
+        attributes:
+          battery: >
+            {{ states('sensor.3_lillys_zimmer_battery_level') }}
+          humidity: >
+            {{ states('sensor.3_lillys_zimmer_humidity') }}
+          pressure: >
+            {{ states('sensor.3_lillys_zimmer_pressure') }}
+          temperature: >
+            {{ states('sensor.3_lillys_zimmer_temperature') }}
+          last_updated: >
+            {{ states.sensor['3_lillys_zimmer_humidity'].last_updated }}
+          unit_of_measurement: "°C"
+
+      - unique_id: schlafzimmer_multi
+        name: Schlafzimmer
+        icon: mdi:leak
+        state: >
+          {{ states('sensor.4_schlafzimmer_temperature') }}
+        attributes:
+          battery: >
+            {{ states('sensor.4_schlafzimmer_battery_level') }}
+          humidity: >
+            {{ states('sensor.4_schlafzimmer_humidity') }}
+          pressure: >
+            {{ states('sensor.4_schlafzimmer_pressure') }}
+          temperature: >
+            {{ states('sensor.4_schlafzimmer_temperature') }}
+          last_updated: >
+            {{ states.sensor['4_schlafzimmer_humidity'].last_updated }}
+          unit_of_measurement: "°C"
+
       - unique_id: last_backup
         name: Last Backup
         icon: mdi:cloud-upload

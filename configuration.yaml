@@ -17,7 +17,6 @@ device_tracker:
       laptop_tim: !secret laptop_tim
       handy_clarissa: !secret handy_clarissa
       handy_tim: !secret handy_tim
-      uhr_tim: !secret uhr_tim
 
 wake_on_lan:
 
@@ -46,8 +45,9 @@ waste_collection_schedule:
     args:
       url: "https://waste.awb-landkreis-karlsruhe.de/WasteManagementKarlsruheHaushalteBlank/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=707245001&AboID=23908"
     customize:
-      # - type: Mobile Schadstoffsammlung
-      #   alias: Schadstoffe
+      - type: Mobile Schadstoffsammlung
+        alias: Schadstoffe
+        show: false
       - type: Biobehaelter
         alias: Bio
       - type: Restabfallbehaelter
@@ -64,10 +64,10 @@ waste_collection_schedule:
       until: '2023-12-14'
 
 
-media_player:
-  - platform: onkyo
-    host: !secret onkyo_receiver
-    name: receiver
+# media_player:
+#   - platform: onkyo
+#     host: !secret onkyo_receiver
+#     name: receiver
 
 homeassistant:
   name: Startseite

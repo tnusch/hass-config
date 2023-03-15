@@ -22,6 +22,7 @@ sensor:
   - platform: waste_collection_schedule
     name: Muellabfuhr
     value_template: "{{value.daysTo}}|{{value.types}}"
+    source_index: [0, 1]
 
   ####################################################
   #                                                  #
@@ -73,3 +74,17 @@ sensor:
   - platform: seventeentrack
     username: !secret seventeentrack_username
     password: !secret seventeentrack_password
+
+  ####################################################
+  #                                                  #
+  #                   TGTG                           #
+  #                                                  #
+  ####################################################
+
+  - platform: tgtg
+    email: !secret tgtg_email
+    access_token: !secret tgtg_access_token
+    refresh_token: !secret tgtg_refresh_token
+    user_id: !secret tgtg_user_id
+    cookie: !secret tgtg_cookie
+    scan_interval: 600

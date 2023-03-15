@@ -47,7 +47,7 @@ template:
       - unique_id: last_clean_duration_min
         icon: mdi:timer-sand
         state: >
-          {% set duration = states('sensor.robi_last_clean_duration') | int %}
+          {% set duration = states('sensor.robi_last_clean_duration') | int(0) %}
           {%- set TIME_MAP = {
                         'w': (duration / 604800) % 604800,
                         'd': (duration / 86400) % 7,
@@ -56,10 +56,10 @@ template:
                         's': (duration % 60)
                     }
           -%}
-          {% if (TIME_MAP.h|int > 0) %}
-          {{TIME_MAP.h|int}} Stunde, {{TIME_MAP.m|int}} Minuten
+          {% if (TIME_MAP.h|int(0) > 0) %}
+          {{TIME_MAP.h|int(0)}} Stunde, {{TIME_MAP.m|int(0)}} Minuten
           {% else %}
-          {{TIME_MAP.m|int}} Minuten
+          {{TIME_MAP.m|int(0)}} Minuten
           {% endif %}
         attributes:
           friendly_name: Dauer

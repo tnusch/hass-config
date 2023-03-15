@@ -37,3 +37,11 @@ wasser_erkannt:
           seconds: 0
           milliseconds: 0
   mode: single
+lightstrip_umschalten:
+  alias: Lightstrip umschalten
+  sequence:
+  - type: toggle
+    device_id: 4eb33e85485c7d06d680c8aba4fc78e2
+    entity_id: light.extended_color_light_11
+    domain: light
+  mode: single

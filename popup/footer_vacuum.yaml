@@ -2,7 +2,7 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Dammsugare
+    title: Robi
     timeout: 300000
     style: |
       --popup-max-width: calc(385px + 495px);
@@ -51,7 +51,7 @@ browser_mod:
             grid-area: info
           cards:
             - type: entities
-              title: Översikt
+              title: Übersicht
               card_mod:
                 class: header
                 style: |
@@ -223,56 +223,36 @@ browser_mod:
           map_modes:
             - template: vacuum_clean_zone_predefined
               predefined_selections:
-                - zones: [[18627, 22412, 20877, 26812]]
-                  # label:
-                  #   text: "Flur"
-                  #   x: 19752
-                  #   y: 24612
-                  #   offset_y: 35
+                - zones: [[25091, 31992, 26395, 35272]]
+                  icon:
+                    name: "mdi:countertop"
+                    x: 25743
+                    y: 33632
+                - zones: [[24553, 28922, 27688, 32273]]
+                  icon:
+                    name: "mdi:table-chair"
+                    x: 26120
+                    y: 30597
+                - zones: [[27462, 32028, 28837, 35899]]
                   icon:
                     name: "mdi:door"
-                    x: 19752
-                    y: 24612
-                - zones: [[20804, 24733, 26504, 30583]]
-                  # label:
-                  #   text: "Wohnzimmer"
-                  #   x: 23654
-                  #   y: 27658
-                  #   offset_y: 35
+                    x: 28149
+                    y: 33963
+                - zones: [[27462, 28886, 28801, 31967]]
+                  icon:
+                    name: "mdi:stairs"
+                    x: 28131
+                    y: 30426
+                - zones: [[24518, 24703, 30453, 28915]]
                   icon:
                     name: "mdi:television"
-                    x: 23654
-                    y: 27658
-                - zones: [[14107, 27029, 20557, 30629]]
-                  # label:
-                  #   text: "Schlafzimmer"
-                  #   x: 17332
-                  #   y: 28829
-                  #   offset_y: 35
+                    x: 27485
+                    y: 26809
+                - zones: [[26457, 33662, 27544, 35450]]
                   icon:
-                    name: "mdi:bed"
-                    x: 17332
-                    y: 28829
-                - zones: [[15301, 25470, 18601, 27020]]
-                  # label:
-                  #   text: "Bad"
-                  #   x: 16951
-                  #   y: 26245
-                  #   offset_y: 35
-                  icon:
-                    name: "mdi:shower"
-                    x: 16951
-                    y: 26245
-                - zones: [[14599, 22491, 18599, 25391]]
-                  # label:
-                  #   text: "Flur"
-                  #   x: 16599
-                  #   y: 23941
-                  #   offset_y: 35
-                  icon:
-                    name: "mdi:laptop"
-                    x: 16599
-                    y: 23941
+                    name: "mdi:toilet"
+                    x: 27000
+                    y: 34556
             - template: vacuum_clean_zone
             - template: vacuum_goto
             - template: vacuum_follow_path

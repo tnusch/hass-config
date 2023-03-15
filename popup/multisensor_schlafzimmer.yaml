@@ -1,0 +1,25 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Schlafzimmer
+    content:
+      type: grid
+      columns: 1
+      square: false
+      cards:
+        - type: entities
+          entities:
+            - entity: sensor.4_schlafzimmer_temperature
+              secondary_info: last-updated
+              name: Temperatur
+            - entity: sensor.4_schlafzimmer_humidity
+              secondary_info: last-updated
+              name: Luftfeuchtigkeit
+          show_header_toggle: false
+          state_color: false
+        - type: history-graph
+          entities:
+            - entity: sensor.4_schlafzimmer_temperature
+            - entity: sensor.4_schlafzimmer_humidity
+          hours_to_show: 48
